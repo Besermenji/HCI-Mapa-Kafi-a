@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{99D445DE-4F11-43E9-9C0F-BC47E0594395}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Mapa_Kafića</RootNamespace>
+    <AssemblyName>Mapa Kafića</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>C:\Program Files\System.Data.SQLite\2010\bin\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=1.0.66.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\SQLite.NET\bin\x64\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq, Version=2.0.38.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\SQLite.NET\bin\x64\System.Data.SQLite.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DodajEtiketu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DodajEtiketu.Designer.cs">
+      <DependentUpon>DodajEtiketu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EtiketaPrikaz.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EtiketaPrikaz.Designer.cs">
+      <DependentUpon>EtiketaPrikaz.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SQLiteCRUD.cs" />
+    <Compile Include="DodavanjeKafica.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DodavanjeKafica.Designer.cs">
+      <DependentUpon>DodavanjeKafica.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DodajTip.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DodajTip.Designer.cs">
+      <DependentUpon>DodajTip.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PrikazTabelarno.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PrikazTabelarno.Designer.cs">
+      <DependentUpon>PrikazTabelarno.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pocetna.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Pocetna.Designer.cs">
+      <DependentUpon>Pocetna.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TipPrikaz.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TipPrikaz.Designer.cs">
+      <DependentUpon>TipPrikaz.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="DodajEtiketu.resx">
+      <DependentUpon>DodajEtiketu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DodavanjeKafica.resx">
+      <DependentUpon>DodavanjeKafica.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DodajTip.resx">
+      <DependentUpon>DodajTip.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EtiketaPrikaz.resx">
+      <DependentUpon>EtiketaPrikaz.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrikazTabelarno.resx">
+      <DependentUpon>PrikazTabelarno.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pocetna.resx">
+      <DependentUpon>Pocetna.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="TipPrikaz.resx">
+      <DependentUpon>TipPrikaz.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="App.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Icon1.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="err.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ok.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

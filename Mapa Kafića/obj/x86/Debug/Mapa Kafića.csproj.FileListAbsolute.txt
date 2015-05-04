@@ -1,0 +1,16 @@
+E:\HCI\Mapa Kafića\Mapa Kafića\bin\Debug\Mapa Kafića.exe
+E:\HCI\Mapa Kafića\Mapa Kafića\bin\Debug\Mapa Kafića.pdb
+E:\HCI\Mapa Kafića\Mapa Kafića\obj\x86\Debug\Mapa_Kafića.Properties.Resources.resources
+E:\HCI\Mapa Kafića\Mapa Kafića\obj\x86\Debug\Mapa Kafića.csproj.GenerateResource.Cache
+E:\HCI\Mapa Kafića\Mapa Kafića\obj\x86\Debug\Mapa Kafića.exe
+E:\HCI\Mapa Kafića\Mapa Kafića\obj\x86\Debug\Mapa Kafića.pdb
+E:\HCI\Mapa Kafića\Mapa Kafića\obj\x86\Debug\Mapa Kafića.csprojResolveAssemblyReference.cache
+E:\HCI\Mapa Kafića\Mapa Kafića\obj\x86\Debug\Mapa_Kafića.PrikazTabelarno.resources
+E:\HCI\Mapa Kafića\Mapa Kafića\obj\x86\Debug\Mapa_Kafića.Pocetna.resources
+E:\HCI\Mapa Kafića\Mapa Kafića\obj\x86\Debug\Mapa_Kafića.DodavanjeKafica.resources
+E:\HCI\Mapa Kafića\Mapa Kafića\bin\Debug\EntityFramework.dll
+E:\HCI\Mapa Kafića\Mapa Kafića\obj\x86\Debug\Mapa_Kafića.Tip.resources
+E:\HCI\Mapa Kafića\Mapa Kafića\bin\Debug\Mapa Kafića.exe.config
+E:\HCI\Mapa Kafića\Mapa Kafića\obj\x86\Debug\Mapa_Kafića.TipPrikaz.resources
+E:\HCI\Mapa Kafića\Mapa Kafića\obj\x86\Debug\Mapa_Kafića.DodajEtiketu.resources
+E:\HCI\Mapa Kafića\Mapa Kafića\obj\x86\Debug\Mapa_Kafića.EtiketaPrikaz.resources
