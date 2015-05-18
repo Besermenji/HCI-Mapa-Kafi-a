@@ -30,8 +30,7 @@
         {
             this.enterEntery = new System.Windows.Forms.Button();
             this.deleteEntery = new System.Windows.Forms.Button();
-            this.tipTable = new System.Windows.Forms.DataGridView();
-            ((System.ComponentModel.ISupportInitialize)(this.tipTable)).BeginInit();
+            this.etiketeListView = new System.Windows.Forms.ListView();
             this.SuspendLayout();
             // 
             // enterEntery
@@ -54,27 +53,27 @@
             this.deleteEntery.UseVisualStyleBackColor = true;
             this.deleteEntery.Click += new System.EventHandler(this.deleteEntery_Click);
             // 
-            // tipTable
+            // etiketeListView
             // 
-            this.tipTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.tipTable.Location = new System.Drawing.Point(12, 12);
-            this.tipTable.Name = "tipTable";
-            this.tipTable.Size = new System.Drawing.Size(260, 150);
-            this.tipTable.TabIndex = 3;
+            this.etiketeListView.Location = new System.Drawing.Point(12, 12);
+            this.etiketeListView.Name = "etiketeListView";
+            this.etiketeListView.Size = new System.Drawing.Size(260, 167);
+            this.etiketeListView.TabIndex = 6;
+            this.etiketeListView.UseCompatibleStateImageBehavior = false;
+            this.etiketeListView.SelectedIndexChanged += new System.EventHandler(this.etiketeListView_SelectedIndexChanged);
             // 
             // EtiketaPrikaz
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Controls.Add(this.etiketeListView);
             this.Controls.Add(this.enterEntery);
             this.Controls.Add(this.deleteEntery);
-            this.Controls.Add(this.tipTable);
             this.Name = "EtiketaPrikaz";
             this.Text = "Prikaz Etiketa";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.EtiketaPrikaz_FormClosed);
             this.Load += new System.EventHandler(this.EtiketaPrikaz_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.tipTable)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -83,6 +82,6 @@
 
         private System.Windows.Forms.Button enterEntery;
         private System.Windows.Forms.Button deleteEntery;
-        private System.Windows.Forms.DataGridView tipTable;
+        private System.Windows.Forms.ListView etiketeListView;
     }
 }

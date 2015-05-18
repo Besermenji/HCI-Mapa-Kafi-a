@@ -25,9 +25,25 @@ namespace Mapa_Kafića
 
             SQLiteDatabase tip = new SQLiteDatabase("", "baza.s3db");
             tip.TestConnection();
-            DataTable t = tip.GetDataTable("SELECT etiketa FROM etiketa; ");
-            tipTable.DataSource = t;
+            DataTable t = tip.GetDataTable("SELECT etiketa,boja FROM etiketa; ");
+
+            //tipoviListView dodavanje ikona tipa + naziva tipa
+            //ImageList ikone = new ImageList();
+
+            //pravimo novi list view item i dodeljujemo mu boju
+            foreach (DataRow row in t.Rows)
+            {
+
+                ListViewItem it = new ListViewItem();
+
+                it.ForeColor = Color.FromName(row["boja"].ToString());
+                it.Text = row["etiketa"].ToString();
+                etiketeListView.Items.Add(it);
+
+            }
+
         }
+
 
         private void enterEntery_Click(object sender, EventArgs e)
         {
@@ -42,7 +58,8 @@ namespace Mapa_Kafića
             isButtonPressed = true;
             try
             {
-                String wop = tipTable.Rows[tipTable.SelectedRows[0].Index].Cells[0].Value.ToString();
+                String wop = etiketeListView.SelectedItems[0].Text.Trim();
+
                 SQLiteDatabase tip = new SQLiteDatabase("", "baza.s3db");
                 tip.TestConnection();
                 tip.Delete("Etiketa", "etiketa = '" + wop + "'");
@@ -58,10 +75,10 @@ namespace Mapa_Kafića
             }
             catch (ArgumentOutOfRangeException a)
             {
-                String wop = tipTable.Rows[0].Cells[0].Value.ToString();
+                //String wop = tipTable.Rows[0].Cells[0].Value.ToString();
                 SQLiteDatabase tip = new SQLiteDatabase("", "baza.s3db");
                 tip.TestConnection();
-                tip.Delete("Etiketa", "etiketa = '" + wop + "'");
+                //tip.Delete("Etiketa", "etiketa = '" + wop + "'");
                 this.Close();
                 EtiketaPrikaz p = new EtiketaPrikaz();
                 p.Show();
@@ -82,7 +99,17 @@ namespace Mapa_Kafića
 
         private void EtiketaPrikaz_Load(object sender, EventArgs e)
         {
+            deleteEntery.Enabled = false;
+        }
 
+        private void etiketeListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (etiketeListView.SelectedItems.Count == 0)
+            {
+                deleteEntery.Enabled = false;
+            }
+            else
+                deleteEntery.Enabled = true;
         }
     }
 }

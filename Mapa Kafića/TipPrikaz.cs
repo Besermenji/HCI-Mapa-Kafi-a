@@ -18,6 +18,9 @@ namespace Mapa_Kafića
             this.isButtonPressed = false;
             InitializeComponent();
             readTable();
+
+            
+
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -29,13 +32,33 @@ namespace Mapa_Kafića
 
             SQLiteDatabase tip = new SQLiteDatabase("", "baza.s3db");
             tip.TestConnection();
-            DataTable t = tip.GetDataTable("SELECT tip FROM tip; ");
-            tipTable.DataSource = t;
+            DataTable t = tip.GetDataTable("SELECT tip,ikona FROM tip; ");
+            
+            //tipoviListView dodavanje ikona tipa + naziva tipa
+            ImageList ikone = new ImageList();
+
+            //dodamo sve ikone u lisu
+            foreach (DataRow row in t.Rows)
+            {
+                String tip_row = row["tip"].ToString();
+                String ico_row = row["ikona"].ToString();
+
+                ikone.Images.Add(tip_row, Image.FromFile(ico_row));
+            }
+
+            //kazemo tipoviListView-u da koristi listu ikona
+            tipoviListView.LargeImageList = ikone;
+
+            foreach (DataRow row in t.Rows)
+            {
+                ListViewItem tmp = tipoviListView.Items.Add(row["tip"].ToString());
+                tmp.ImageKey = row["tip"].ToString();
+            }
         }
 
         private void TipPrikaz_Load(object sender, EventArgs e)
         {
-
+            deleteEntery.Enabled = false;
         }
 
         private void enterEntery_Click(object sender, EventArgs e)
@@ -61,10 +84,10 @@ namespace Mapa_Kafića
             isButtonPressed = true;
             try
             {
-                String wop = tipTable.Rows[tipTable.SelectedRows[0].Index].Cells[0].Value.ToString();
+                String wop = tipoviListView.SelectedItems[0].Text.Trim();
                 SQLiteDatabase tip = new SQLiteDatabase("", "baza.s3db");
                 tip.TestConnection();
-                tip.Delete("Tip", "tip = '" + wop + "'");
+                tip.Delete("Tip", "tip = '" + wop.Trim() + "'");
                 this.Close();
                 TipPrikaz p = new TipPrikaz();
                 p.Show();
@@ -76,10 +99,10 @@ namespace Mapa_Kafića
                 p.Show();
             }
             catch (ArgumentOutOfRangeException a) {
-                String wop = tipTable.Rows[0].Cells[0].Value.ToString();
+                //String wop = tipTable.Rows[0].Cells[0].Value.ToString();
                 SQLiteDatabase tip = new SQLiteDatabase("", "baza.s3db");
                 tip.TestConnection();
-                tip.Delete("Tip", "tip = '" + wop + "'");
+                //tip.Delete("Tip", "tip = '" + wop + "'");
                 this.Close();
                 TipPrikaz p = new TipPrikaz();
                 p.Show();
@@ -87,6 +110,21 @@ namespace Mapa_Kafića
            
 
 
+        }
+
+        private void tipoviListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tipoviListView_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            if (tipoviListView.SelectedItems.Count == 0)
+            {
+                deleteEntery.Enabled = false;
+            }
+            else
+                deleteEntery.Enabled = true;
         }
     }
 }

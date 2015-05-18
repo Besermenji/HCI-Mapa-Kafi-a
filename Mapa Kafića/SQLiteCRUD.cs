@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Data;  
-using System.Data.SQLite;  
+using System.Data;
 using System.IO;  
-using System.Configuration;  
+using System.Configuration;
+using System.Data.SQLite;
 
 namespace Mapa_Kafića
 {

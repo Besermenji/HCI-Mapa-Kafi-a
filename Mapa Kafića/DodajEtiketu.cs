@@ -30,18 +30,17 @@ namespace Mapa_Kafića
 
         private void DodajEtiketu_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (!succes)
-            {
-                TipPrikaz p = new TipPrikaz();
+            
+                EtiketaPrikaz p = new EtiketaPrikaz();
                 p.Show();
-            }
+            
         }
 
         private void dodajTipButton_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(tipoviTextBox.Text))
+            if (string.IsNullOrEmpty(tipoviTextBox.Text)&&(string.IsNullOrEmpty(textBox1.Text))&& colorComboBox.SelectedIndex == -1)
             {
-                tipToolTip.SetToolTip(tipoviTextBox, "Uesite bar jednu etiketu.");
+                tipToolTip.SetToolTip(tipoviTextBox, "Nije sve popunjeno.");
                 tipToolTip.Show(tipToolTip.GetToolTip(tipoviTextBox), tipoviTextBox, 5000);
                 tipoviTextBox.Focus();
             }
@@ -55,7 +54,10 @@ namespace Mapa_Kafića
                 // Define the SQL Create table statement  
                 string createLogTableSQL = "CREATE TABLE IF NOT EXISTS `Etiketa`" +
                                             "(`id`	INTEGER DEFAULT 0 PRIMARY KEY AUTOINCREMENT," +
-                                            "`etiketa`	TEXT UNIQUE);";
+                                            "`etiketa`	TEXT UNIQUE,"+
+                                            "'opis' TEXT,"+
+                                            "'boja' TEXT"
+                                            +");";
 
                 using (SQLiteTransaction sqlTransaction = cnn.BeginTransaction())
                 {
@@ -67,13 +69,12 @@ namespace Mapa_Kafića
                     sqlTransaction.Commit();
                 } // end using    
 
-                string[] etikete = tipoviTextBox.Text.Split(',');
+                string etiketa = tipoviTextBox.Text;
 
 
-                for (int i = 0; i < etikete.Length; i++)
-                {
+                
 
-                    string quary = "SELECT etiketa FROM Etiketa where etiketa ='" + etikete[i].Trim() + "';";
+                    string quary = "SELECT etiketa FROM Etiketa where etiketa ='" + etiketa.Trim() + "';";
                     SQLiteCommand q = new SQLiteCommand(cnn);
                     q.CommandText = quary;
                     object res = q.ExecuteScalar();
@@ -83,7 +84,7 @@ namespace Mapa_Kafića
 
                         try
                         {
-                            string sql = "insert into Etiketa (etiketa) values ('" + etikete[i].Trim() + "')";
+                            string sql = "insert into Etiketa (etiketa, opis, boja) values ('" + etiketa.Trim() + "','" + textBox1.Text.Trim() + "','" + colorComboBox.SelectedItem.ToString().Trim() + "')";
                             SQLiteCommand mycommand = new SQLiteCommand(cnn);
                             mycommand.CommandText = sql;
                             int rowsUpdated = mycommand.ExecuteNonQuery();
@@ -94,9 +95,9 @@ namespace Mapa_Kafića
                             throw;
                         }
                     }
-                    else continue;
+                    
 
-                }
+                
 
                 cnn.Close();
 
@@ -110,14 +111,34 @@ namespace Mapa_Kafića
                 }
                 else
                 {
-                    EtiketaPrikaz p = new EtiketaPrikaz();
-                    succes = true;
+                    
                     this.Close();
-                    p.Show();
+                                        
                 }
 
 
             }
+        }
+
+        private void DodajEtiketu_Load(object sender, EventArgs e)
+        {
+
+            tipoviTextBox.Focus();
+            foreach (System.Reflection.PropertyInfo prop in typeof(Color).GetProperties())
+            {
+                if (prop.PropertyType.FullName == "System.Drawing.Color")
+                   
+                    colorComboBox.Items.Add(prop.Name);
+                    
+                    
+            }
+
+        }
+
+        private void colorComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Color p = Color.FromName(colorComboBox.Text);
+            labelPrimer.ForeColor = p;
         }
     }
 }
