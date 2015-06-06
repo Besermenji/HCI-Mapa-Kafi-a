@@ -64,8 +64,9 @@
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(122, 23);
             this.button3.TabIndex = 3;
-            this.button3.Text = "Izmeni mapu";
+            this.button3.Text = "Tabelarni prikaz";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button4
             // 
@@ -90,6 +91,7 @@
             // lokaliListView
             // 
             this.lokaliListView.Location = new System.Drawing.Point(12, 38);
+            this.lokaliListView.MultiSelect = false;
             this.lokaliListView.Name = "lokaliListView";
             this.lokaliListView.Size = new System.Drawing.Size(74, 341);
             this.lokaliListView.TabIndex = 7;
@@ -108,6 +110,8 @@
             this.mapPicture.Size = new System.Drawing.Size(478, 341);
             this.mapPicture.TabIndex = 8;
             this.mapPicture.TabStop = false;
+            this.mapPicture.Click += new System.EventHandler(this.mapPicture_Click);
+            this.mapPicture.DoubleClick += new System.EventHandler(this.mapPicture_DoubleClick);
             // 
             // Pocetna
             // 
@@ -122,6 +126,7 @@
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
+            this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Name = "Pocetna";
             this.Text = "Pocetak";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Pocetna_FormClosed);

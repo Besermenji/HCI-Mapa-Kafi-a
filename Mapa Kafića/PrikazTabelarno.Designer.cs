@@ -28,158 +28,113 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.tabela = new System.Windows.Forms.DataGridView();
-            this.OznakaKafica = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ImeKafica = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TipKafica = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.OpisKafica = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.KapacitetLokala = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.StatusAlkohola = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.StatusPusenje = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Rezervacije = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Hendikepirani = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Cena = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.tabela)).BeginInit();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.label1 = new System.Windows.Forms.Label();
+            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.label2 = new System.Windows.Forms.Label();
+            this.dataGridView3 = new System.Windows.Forms.DataGridView();
+            this.label3 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
             this.SuspendLayout();
             // 
-            // tabela
+            // dataGridView1
             // 
-            this.tabela.AccessibleName = "tejbl";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.tabela.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.tabela.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.tabela.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.OznakaKafica,
-            this.ImeKafica,
-            this.TipKafica,
-            this.OpisKafica,
-            this.KapacitetLokala,
-            this.StatusAlkohola,
-            this.StatusPusenje,
-            this.Rezervacije,
-            this.Hendikepirani,
-            this.Cena});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.tabela.DefaultCellStyle = dataGridViewCellStyle2;
-            this.tabela.Location = new System.Drawing.Point(12, 12);
-            this.tabela.Name = "tabela";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.tabela.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            this.tabela.Size = new System.Drawing.Size(710, 158);
-            this.tabela.TabIndex = 0;
-            this.tabela.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(12, 26);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(707, 68);
+            this.dataGridView1.TabIndex = 4;
             // 
-            // OznakaKafica
+            // label1
             // 
-            this.OznakaKafica.HeaderText = "Oznaka";
-            this.OznakaKafica.Name = "OznakaKafica";
-            this.OznakaKafica.ReadOnly = true;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(9, 10);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(33, 13);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Lokal";
             // 
-            // ImeKafica
+            // dataGridView2
             // 
-            this.ImeKafica.HeaderText = "Ime";
-            this.ImeKafica.Name = "ImeKafica";
-            this.ImeKafica.ReadOnly = true;
+            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView2.Location = new System.Drawing.Point(12, 128);
+            this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.Size = new System.Drawing.Size(707, 68);
+            this.dataGridView2.TabIndex = 6;
             // 
-            // TipKafica
+            // label2
             // 
-            this.TipKafica.HeaderText = "Tip";
-            this.TipKafica.Name = "TipKafica";
-            this.TipKafica.ReadOnly = true;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(9, 112);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(22, 13);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Tip";
             // 
-            // OpisKafica
+            // dataGridView3
             // 
-            this.OpisKafica.HeaderText = "Opis";
-            this.OpisKafica.Name = "OpisKafica";
-            this.OpisKafica.ReadOnly = true;
+            this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView3.Location = new System.Drawing.Point(12, 236);
+            this.dataGridView3.Name = "dataGridView3";
+            this.dataGridView3.Size = new System.Drawing.Size(707, 68);
+            this.dataGridView3.TabIndex = 8;
             // 
-            // KapacitetLokala
+            // label3
             // 
-            this.KapacitetLokala.HeaderText = "Kapacitet";
-            this.KapacitetLokala.Name = "KapacitetLokala";
-            this.KapacitetLokala.ReadOnly = true;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(9, 220);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(40, 13);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "Etiketa";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
-            // StatusAlkohola
+            // button1
             // 
-            this.StatusAlkohola.HeaderText = "StatusAlkohola";
-            this.StatusAlkohola.Name = "StatusAlkohola";
-            this.StatusAlkohola.ReadOnly = true;
+            this.button1.Location = new System.Drawing.Point(647, 356);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 9;
+            this.button1.Text = "Izvezi";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // StatusPusenje
-            // 
-            this.StatusPusenje.HeaderText = "StatusPusenja";
-            this.StatusPusenje.Name = "StatusPusenje";
-            this.StatusPusenje.ReadOnly = true;
-            // 
-            // Rezervacije
-            // 
-            this.Rezervacije.HeaderText = "Rezervacije?";
-            this.Rezervacije.Name = "Rezervacije";
-            this.Rezervacije.ReadOnly = true;
-            this.Rezervacije.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Rezervacije.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // Hendikepirani
-            // 
-            this.Hendikepirani.HeaderText = "Hendikepirani?";
-            this.Hendikepirani.Name = "Hendikepirani";
-            this.Hendikepirani.ReadOnly = true;
-            this.Hendikepirani.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Hendikepirani.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // Cena
-            // 
-            this.Cena.HeaderText = "Cena";
-            this.Cena.Name = "Cena";
-            this.Cena.ReadOnly = true;
-            // 
-            // Form2
+            // PrikazTabelarno
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(734, 391);
-            this.Controls.Add(this.tabela);
-            this.Name = "Form2";
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.dataGridView3);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.dataGridView2);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.label1);
+            this.Name = "PrikazTabelarno";
             this.Text = "Dodaj u mapu";
-            ((System.ComponentModel.ISupportInitialize)(this.tabela)).EndInit();
+            this.Load += new System.EventHandler(this.PrikazTabelarno_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.DataGridView tabela;
-        private System.Windows.Forms.DataGridViewTextBoxColumn OznakaKafica;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ImeKafica;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TipKafica;
-        private System.Windows.Forms.DataGridViewTextBoxColumn OpisKafica;
-        private System.Windows.Forms.DataGridViewTextBoxColumn KapacitetLokala;
-        private System.Windows.Forms.DataGridViewTextBoxColumn StatusAlkohola;
-        private System.Windows.Forms.DataGridViewTextBoxColumn StatusPusenje;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn Rezervacije;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn Hendikepirani;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Cena;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.DataGridView dataGridView3;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button button1;
+
 
     }
 }

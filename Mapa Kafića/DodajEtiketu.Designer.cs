@@ -41,6 +41,7 @@
             this.opisErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.colorErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.labelPrimer = new System.Windows.Forms.Label();
+            this.izmenaButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.etiketaErrorProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.opisErrorProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.colorErrorProvider)).BeginInit();
@@ -53,6 +54,8 @@
             this.tipoviTextBox.Name = "tipoviTextBox";
             this.tipoviTextBox.Size = new System.Drawing.Size(190, 23);
             this.tipoviTextBox.TabIndex = 5;
+            this.tipoviTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tipoviTextBox_KeyDown);
+            this.tipoviTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tipoviTextBox_KeyPress);
             // 
             // label1
             // 
@@ -86,6 +89,9 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(190, 23);
             this.textBox1.TabIndex = 7;
+            this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
+            this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
+            this.textBox1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyUp);
             // 
             // label2
             // 
@@ -118,6 +124,7 @@
             this.colorComboBox.Size = new System.Drawing.Size(190, 21);
             this.colorComboBox.TabIndex = 10;
             this.colorComboBox.SelectedIndexChanged += new System.EventHandler(this.colorComboBox_SelectedIndexChanged);
+            this.colorComboBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.colorComboBox_KeyDown);
             // 
             // etiketaErrorProvider
             // 
@@ -142,11 +149,22 @@
             this.labelPrimer.TabIndex = 11;
             this.labelPrimer.Text = "PRIMER";
             // 
+            // izmenaButton
+            // 
+            this.izmenaButton.Location = new System.Drawing.Point(197, 227);
+            this.izmenaButton.Name = "izmenaButton";
+            this.izmenaButton.Size = new System.Drawing.Size(75, 23);
+            this.izmenaButton.TabIndex = 12;
+            this.izmenaButton.Text = "Izmeni";
+            this.izmenaButton.UseVisualStyleBackColor = true;
+            this.izmenaButton.Click += new System.EventHandler(this.izmenaButton_Click);
+            // 
             // DodajEtiketu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Controls.Add(this.izmenaButton);
             this.Controls.Add(this.labelPrimer);
             this.Controls.Add(this.colorComboBox);
             this.Controls.Add(this.label3);
@@ -181,5 +199,6 @@
         private System.Windows.Forms.ErrorProvider opisErrorProvider;
         private System.Windows.Forms.ErrorProvider colorErrorProvider;
         private System.Windows.Forms.Label labelPrimer;
+        private System.Windows.Forms.Button izmenaButton;
     }
 }

@@ -17,3 +17,4 @@ D:\HCI\HCI-Mapa-Kafi-a\Mapa Kafića\obj\Debug\Mapa Kafića.csproj.GenerateResour
 D:\HCI\HCI-Mapa-Kafi-a\Mapa Kafića\obj\Debug\Mapa Kafića.exe
 D:\HCI\HCI-Mapa-Kafi-a\Mapa Kafića\obj\Debug\Mapa Kafića.pdb
 D:\HCI\HCI-Mapa-Kafi-a\Mapa Kafića\obj\Debug\Mapa Kafića.csprojResolveAssemblyReference.cache
+D:\HCI\HCI-Mapa-Kafi-a\Mapa Kafića\bin\Debug\ClosedXML.xml

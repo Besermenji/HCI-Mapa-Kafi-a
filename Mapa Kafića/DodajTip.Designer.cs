@@ -39,12 +39,14 @@
             this.ikonaComboBox = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.izmenaButton = new System.Windows.Forms.Button();
+            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // dodajTipButton
             // 
-            this.dodajTipButton.Location = new System.Drawing.Point(197, 226);
+            this.dodajTipButton.Location = new System.Drawing.Point(186, 226);
             this.dodajTipButton.Name = "dodajTipButton";
             this.dodajTipButton.Size = new System.Drawing.Size(75, 23);
             this.dodajTipButton.TabIndex = 0;
@@ -72,6 +74,8 @@
             this.tipoviTextBox.Size = new System.Drawing.Size(249, 27);
             this.tipoviTextBox.TabIndex = 2;
             this.tipoviTextBox.TextChanged += new System.EventHandler(this.tipoviTextBox_TextChanged);
+            this.tipoviTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tipoviTextBox_KeyDown);
+            this.tipoviTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tipoviTextBox_KeyPress);
             // 
             // tipToolTip
             // 
@@ -84,6 +88,8 @@
             this.opisTipaTextBox.Name = "opisTipaTextBox";
             this.opisTipaTextBox.Size = new System.Drawing.Size(249, 27);
             this.opisTipaTextBox.TabIndex = 4;
+            this.opisTipaTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.opisTipaTextBox_KeyDown);
+            this.opisTipaTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.opisTipaTextBox_KeyPress);
             // 
             // label2
             // 
@@ -111,6 +117,7 @@
             this.ikonaComboBox.Size = new System.Drawing.Size(147, 21);
             this.ikonaComboBox.TabIndex = 5;
             this.ikonaComboBox.SelectedIndexChanged += new System.EventHandler(this.ikonaComboBox_SelectedIndexChanged);
+            this.ikonaComboBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ikonaComboBox_KeyDown);
             // 
             // label3
             // 
@@ -132,11 +139,22 @@
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
+            // izmenaButton
+            // 
+            this.izmenaButton.Location = new System.Drawing.Point(186, 226);
+            this.izmenaButton.Name = "izmenaButton";
+            this.izmenaButton.Size = new System.Drawing.Size(75, 23);
+            this.izmenaButton.TabIndex = 8;
+            this.izmenaButton.Text = "Izmeni";
+            this.izmenaButton.UseVisualStyleBackColor = true;
+            this.izmenaButton.Click += new System.EventHandler(this.izmenaButton_Click);
+            // 
             // Tip
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Controls.Add(this.izmenaButton);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.ikonaComboBox);
@@ -167,5 +185,7 @@
         private System.Windows.Forms.ComboBox ikonaComboBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button izmenaButton;
+        private System.Windows.Forms.ColorDialog colorDialog1;
     }
 }

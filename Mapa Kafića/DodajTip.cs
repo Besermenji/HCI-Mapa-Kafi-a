@@ -18,25 +18,55 @@ namespace Mapa_Kafića
         bool succes;
         bool uspeh;
         //string fail;
+        private string ime;
         public Tip()
         {
             InitializeComponent();
+            tipoviTextBox.Focus();
+            fillCB();
+            izmenaButton.Visible = false;
+            izmenaButton.Enabled = false;
+
+            
+            
             this.uspeh = true;
             this.succes = true;
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        public Tip(String ime)
         {
+            InitializeComponent();
             tipoviTextBox.Focus();
+            this.ime = ime;
+            fillCB();
+            dodajTipButton.Enabled = false;
+            dodajTipButton.Visible = false;
+            SQLiteDatabase tip = new SQLiteDatabase("", "baza.s3db");
+            tip.TestConnection();
+            DataTable t = tip.GetDataTable("SELECT tip,opis,ikona FROM tip where tip = '"+ime+"'; ");
+            tipoviTextBox.Text = t.Rows[0]["tip"].ToString();
+            opisTipaTextBox.Text = t.Rows[0]["opis"].ToString();
+            ikonaComboBox.Items.Add(t.Rows[0]["ikona"].ToString());
+            ikonaComboBox.Text = t.Rows[0]["ikona"].ToString();
+
+
+        }
+        private void fillCB()
+        {
             string folder = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName) + @"\..\..\tipIcons\";
             string filter = "*.png";
             string[] files = Directory.GetFiles(folder, filter);
 
-            foreach (String  file in files){
+            foreach (String file in files)
+            {
                 ikonaComboBox.Items.Add(file);
             }
 
-            
+        }
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            tipoviTextBox.Focus();
+            tipoviTextBox.Select();
         }
 
         private void dodajTipButton_Click(object sender, EventArgs e)
@@ -45,9 +75,24 @@ namespace Mapa_Kafića
 
             if (string.IsNullOrEmpty(tipoviTextBox.Text))
             {
-                tipToolTip.SetToolTip(tipoviTextBox, "Uesite bar jedan tip");
-                tipToolTip.Show(tipToolTip.GetToolTip(tipoviTextBox), tipoviTextBox, 5000);
+                tipToolTip.SetToolTip(tipoviTextBox, "Nije unesen naziv tipa.");
+                tipToolTip.Show(tipToolTip.GetToolTip(tipoviTextBox), tipoviTextBox, 3000);
                 tipoviTextBox.Focus();
+
+            }
+
+            else if (string.IsNullOrEmpty(opisTipaTextBox.Text))
+            {
+                tipToolTip.SetToolTip(opisTipaTextBox, "Nije unesen opis tipa.");
+                tipToolTip.Show(tipToolTip.GetToolTip(opisTipaTextBox), opisTipaTextBox, 3000);
+                opisTipaTextBox.Focus();
+            }
+            else if (ikonaComboBox.SelectedIndex == -1)
+            {
+                tipToolTip.SetToolTip(ikonaComboBox, "Nije izabrana ni jedna ikona tipa.");
+                tipToolTip.Show(tipToolTip.GetToolTip(ikonaComboBox), ikonaComboBox, 3000);
+                ikonaComboBox.Select();
+                ikonaComboBox.Focus();
             }
             else
             {
@@ -84,7 +129,16 @@ namespace Mapa_Kafića
                 SQLiteCommand q = new SQLiteCommand(cnn);
                 q.CommandText = quary;
                 object res = q.ExecuteScalar();
-                if (res == null)
+                
+                
+                if (res != null) 
+                {
+                    tipToolTip.SetToolTip(tipoviTextBox, "Već tip sa istim imenom.");
+                    tipToolTip.Show(tipToolTip.GetToolTip(tipoviTextBox), tipoviTextBox, 3000);
+                    tipoviTextBox.Focus();
+                }
+                
+                else
                 {
 
 
@@ -97,6 +151,8 @@ namespace Mapa_Kafića
                         //mycommand.Parameters.Add(@name);
                         mycommand.CommandText = sql;
                         int rowsUpdated = mycommand.ExecuteNonQuery();
+                        cnn.Close();
+                        this.Close();
                     }
                     catch (SQLiteException sl)
                     {
@@ -108,7 +164,6 @@ namespace Mapa_Kafića
 
 
 
-                cnn.Close();
 
                 if (!uspeh)
                 {
@@ -120,7 +175,7 @@ namespace Mapa_Kafića
                 }
                 else
                 {
-                    this.Close();
+             
                 }
 
 
@@ -134,12 +189,7 @@ namespace Mapa_Kafića
 
         private void Tip_FormClosed(object sender, FormClosedEventArgs e)
         {
-            //this.Close();
-            //if (!succes)
-            //{
-                TipPrikaz p = new TipPrikaz();
-                p.Show();
-            //}
+            
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -160,6 +210,147 @@ namespace Mapa_Kafića
         private void ikonaComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             pictureBox1.Image = Image.FromFile(ikonaComboBox.Text);
+        }
+
+        private void izmenaButton_Click(object sender, EventArgs e)
+        {
+
+            if (string.IsNullOrEmpty(tipoviTextBox.Text))
+            {
+                tipToolTip.SetToolTip(tipoviTextBox, "Nije unesen naziv tipa.");
+                tipToolTip.Show(tipToolTip.GetToolTip(tipoviTextBox), tipoviTextBox, 3000);
+                tipoviTextBox.Focus();
+
+            }
+
+            else if (string.IsNullOrEmpty(opisTipaTextBox.Text))
+            {
+                tipToolTip.SetToolTip(opisTipaTextBox, "Nije unesen opis tipa.");
+                tipToolTip.Show(tipToolTip.GetToolTip(opisTipaTextBox), opisTipaTextBox, 3000);
+                opisTipaTextBox.Focus();
+            }
+            else if (ikonaComboBox.SelectedIndex == -1)
+            {
+                tipToolTip.SetToolTip(ikonaComboBox, "Nije izabrana ni jedna ikona tipa.");
+                tipToolTip.Show(tipToolTip.GetToolTip(ikonaComboBox), ikonaComboBox, 3000);
+                ikonaComboBox.Select();
+                ikonaComboBox.Focus();
+            }
+            else
+            {
+
+
+                SQLiteDatabase tip = new SQLiteDatabase("", "baza.s3db");
+                tip.TestConnection();
+                DataTable t = tip.GetDataTable("SELECT tip,opis,ikona FROM tip where tip = '" + ime + "'; ");
+                Dictionary<string, string> za_update_lokal = new Dictionary<string, string>();
+                Dictionary<string, string> za_update_tip = new Dictionary<string, string>();
+
+                za_update_tip.Add("tip", tipoviTextBox.Text.Trim());
+                za_update_tip.Add("opis", tipoviTextBox.Text.Trim());
+                za_update_tip.Add("ikona", ikonaComboBox.Text.Trim());
+                tip.Update("Tip", za_update_tip, "tip = '" + ime + "'");
+
+
+
+                za_update_lokal.Add("tip", tipoviTextBox.Text.Trim());
+                tip.Update("Lokal", za_update_lokal, "tip = '" + ime + "'");
+
+                this.Close();
+
+            }
+        }
+
+        private void tipoviTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            //ToolTip t = new ToolTip();
+            if (e.KeyChar == ';')
+            {
+                //  t.Show("Unet nedozvoljen karakter ; !", this, 3000);
+
+                e.Handled = true;
+
+            }
+            else if (e.KeyChar == '"')
+            {
+                //t.Show("Unet nedozvoljen karakter \" !", this, 3000);
+                e.Handled = true;
+            }
+
+            else if (e.KeyChar == '\'')
+            {
+                // t.Show("Unet nedozvoljen karakter \' !", this, 3000);
+                e.Handled = true;
+            }
+
+            else if (e.KeyChar == '\r')
+            {
+                e.Handled = true;
+            }
+
+            else
+            {
+                e.Handled = false;
+            }
+        }
+
+        private void opisTipaTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            //ToolTip t = new ToolTip();
+            if (e.KeyChar == ';')
+            {
+                //  t.Show("Unet nedozvoljen karakter ; !", this, 3000);
+
+                e.Handled = true;
+
+            }
+            else if (e.KeyChar == '"')
+            {
+                //t.Show("Unet nedozvoljen karakter \" !", this, 3000);
+                e.Handled = true;
+            }
+
+            else if (e.KeyChar == '\'')
+            {
+                // t.Show("Unet nedozvoljen karakter \' !", this, 3000);
+                e.Handled = true;
+            }
+
+            else if (e.KeyChar == '\r')
+            {
+                e.Handled = true;
+            }
+
+            else
+            {
+                e.Handled = false;
+            }
+        }
+
+        private void tipoviTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
+                opisTipaTextBox.Focus();
+        }
+
+        private void opisTipaTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
+                ikonaComboBox.Focus();
+        }
+
+        private void ikonaComboBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (izmenaButton.Enabled)
+            {
+                if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
+                    izmenaButton.Focus();
+            }
+            else {
+                if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
+                    dodajTipButton.Focus();
+                
+            }
         }
     }
 }

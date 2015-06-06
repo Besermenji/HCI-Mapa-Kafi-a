@@ -17,39 +17,84 @@ namespace Mapa_Kafića
         //ListViewItem item;
         String itemName;
         String itemColor;
+        List<customPB> pb;
+        
         
         public Pocetna()
         {
+            
             InitializeComponent();
+            this.pb = new List<customPB>();
             readTable();
+            //this.pb = new List<customPB>();
             this.imageLocation = "";
           //  this.item = new ListViewItem();
             //this.itemName = "";
-          //  this.itemColor = "";
-        }   
+          this.itemColor = "";
+          Refresh();
+        }
+
+
+
+
+        public void addToList(ListViewItem it) {
+            lokaliListView.Items.Add(it);
+            lokaliListView.Refresh();
+        }
+
+        public Pocetna(ListViewItem it) {
+            InitializeComponent();
+            readTable();
+            this.imageLocation = "";
+            this.itemColor = "";
+            lokaliListView.Items.Add(it);
+        }
 
         private void button2_Click(object sender, EventArgs e)
         {
             TipPrikaz t = new TipPrikaz();
-            t.Show();
-            this.Visible = false;
+            t.ShowDialog(this);
+            //deleteAllPb();
+            clearTable();
+            readTable();
+            refreshList();
+            Refresh();
+            
             
         }
+        public void clearTable() {
 
-        private void readTable()
+            deleteAllPb();
+            for (int i = lokaliListView.Items.Count-1; i >= 0; i--)
+                lokaliListView.Items.RemoveAt(i);
+
+
+        }
+
+        public void deleteAllPb() {
+            foreach (customPB p in pb)
+            {
+                mapPicture.Controls.Remove(p);
+                //pb.Remove(p);
+            }
+            pb.Clear();
+        }
+        public void readTable()
         {
 
             SQLiteDatabase tip = new SQLiteDatabase("", "baza.s3db");
             tip.TestConnection();
-            DataTable t = tip.GetDataTable("SELECT ime,etikete,tip,ikona FROM Lokal; ");
-            //lokaliList.DataSource = t;
+            DataTable t = tip.GetDataTable("SELECT ime,etikete,tip,ikona,x,y FROM Lokal; ");
             //ovde smestamo listu ikona;
             ImageList ikone = new ImageList();
-
+            
             //pravimo i string za boju i ujedno je trazimo kada trazimo tip
             String[] boje = new String[t.Rows.Count];
             int i = 0;
             foreach (DataRow r in t.Rows) {
+
+                //ako je na tabeli
+                //if(r["na_tabeli"].Equals(1) {continue;}
                //ako ikona ne postoji stavljamo ikonu tipa
                 if (r["ikona"].Equals("")) {
                     DataTable tipTabela = tip.GetDataTable("SELECT ikona FROM tip where tip='" + r["tip"] + "';");
@@ -77,12 +122,39 @@ namespace Mapa_Kafića
             //sve povezemo zajedno
             foreach (DataRow r in t.Rows)
             {
+                //ukoliko su koordinate takve da jeste na mapi
+                if(Convert.ToInt32(r["x"]) != -1 ) {
+                    String name = r["ime"].ToString();
+                    String color = "";
+                        for (int w = 0; w < getLokalColor(name).Length; w++) {
+                            color += getLokalColor(name)[w]+" ";
+                        }
+                    String ico = getLokalImage(name);
 
+                    //pravimo tu paintbox komponentu
+                    Point po = new Point();
+                    String coX = r["x"].ToString();
+                    String coY = r["y"].ToString();
+                    po.X = Convert.ToInt32(coX);
+                    po.Y = Convert.ToInt32(coY);
+                    
+                    //customPB p = new customPB(name, color, ico, p);
+                    customPB pbox = new customPB(name, color, ico, po);
+                    pbox.Show();
+                    pb.Add(pbox);
+                    mapPicture.Controls.Add(pbox);
+
+
+
+
+
+                    continue;}
                 ListViewItem it = lokaliListView.Items.Add(r["ime"].ToString());
-                it.ForeColor = Color.FromName(boje[j]);
+                
+               // it.ForeColor = Color.FromName(boje[j]);
                 j++;
                 it.ImageKey = r["ime"].ToString();
-
+                
 
                 
 
@@ -90,25 +162,39 @@ namespace Mapa_Kafića
 
         
         }
+
+        public void refreshList() {
+            lokaliListView.Refresh();
+        }
         
         private void Pocetak_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             DodavanjeKafica f = new DodavanjeKafica();
-            f.Show();
-            this.Visible = false;
+            f.ShowDialog(this);
+            //deleteAllPb();
+            clearTable();
+            readTable();
+            refreshList();
+            Refresh();
             
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
+           
             EtiketaPrikaz t = new EtiketaPrikaz();
-            t.Show();
-            this.Visible = false;
+            t.ShowDialog(this);
+            //deleteAllPb();
+            clearTable();
+            readTable();
+            refreshList();
+            Refresh();
+            
         }
 
         private void Pocetna_FormClosed(object sender, FormClosedEventArgs e)
@@ -128,19 +214,19 @@ namespace Mapa_Kafića
 
                 Point point = mapPicture.PointToClient(Cursor.Position);
 
-                //PictureBox pb = new PictureBox();
-                //ovde boja i sve
-                //pb.BackColor = Color.FromName(itemColor);
-                //pb.Width = 32;
-                //pb.Height = 32;
-                //pb.ImageLocation = "D:\\HCI\\HCI-Mapa-Kafi-a\\Mapa Kafića\\tipIcons\\8.png";
-                //pb.Left = point.X;
-                //pb.Top = point.Y;
-                ////Size s = new Size(32,32);
                 customPB pb = new customPB(itemName,itemColor,imageLocation,point);
-                
+                this.pb.Add(pb);
+                itemColor = "";
                 mapPicture.Controls.Add(pb);
+                lokaliListView.SelectedItems[0].Remove();
+                lokaliListView.Refresh();
 
+                //cuvanje lokala, odnosno njihovih koordinata
+                Dictionary<string, string> d = new Dictionary<string, string>();
+                d.Add("x",point.X.ToString());
+                d.Add("y", point.Y.ToString());
+                SQLiteDatabase tip = new SQLiteDatabase("", "baza.s3db");
+                tip.Update("Lokal", d, "ime ='" + itemName + "'");
             }
         }
 
@@ -152,7 +238,8 @@ namespace Mapa_Kafića
         private void lokaliListView_MouseDown(object sender, MouseEventArgs e)
         {
             //System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor; 
-             button1.DoDragDrop(button1.Text, DragDropEffects.Copy | DragDropEffects.Move);
+            if (lokaliListView.SelectedItems.Count == 1) 
+                button1.DoDragDrop(button1.Text, DragDropEffects.Copy | DragDropEffects.Move);
         
         }
 
@@ -163,20 +250,34 @@ namespace Mapa_Kafića
                 //if (item == null)
                 ListViewItem item = lokaliListView.SelectedItems[0];
                 itemName = item.Text;
-                itemColor = getLokalColor(itemName);
-                imageLocation = getLokalImage(itemName);
+                //itemColor = getLokalColor(itemName);
+                for (int i = 0; i < getLokalColor(itemName).Length; i++) {
+                    itemColor += getLokalColor(itemName)[i]+" ";
+                }
+                    imageLocation = getLokalImage(itemName);
             }
         }
 
-        private String getLokalColor(String name)
+        private String[] getLokalColor(String name)
         {
             SQLiteDatabase tip = new SQLiteDatabase("", "baza.s3db");
             tip.TestConnection();
+            
             DataTable t = tip.GetDataTable("SELECT ime, etikete, tip, ikona FROM Lokal WHERE ime ='"+name+"'; ");
-            DataTable e = tip.GetDataTable("SELECT boja FROM etiketa WHERE etiketa ='" + t.Rows[0]["etikete"].ToString().Split(',')[0] + "'; ");
+            String[] etikete = t.Rows[0]["etikete"].ToString().Split(',');
+            String[] boje = new String[etikete.Length];
 
+            for (int i = 0; i < etikete.Length; i++ )
+            {
 
-            return e.Rows[0]["boja"].ToString();
+                if (!etikete[i].Trim().Equals(""))
+                {
+                    DataTable e = tip.GetDataTable("SELECT boja FROM etiketa WHERE etiketa ='" + etikete[i].Trim() + "'; ");
+                    boje[i] = e.Rows[0]["boja"].ToString();
+                }
+            }
+
+            return boje;
         }
 
         private String getLokalImage(string name) {
@@ -218,6 +319,23 @@ namespace Mapa_Kafića
             {
                 e.UseDefaultCursors = true;
             }
+        }
+
+        private void mapPicture_DoubleClick(object sender, EventArgs e)
+        {
+
+        }
+
+        private void mapPicture_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            PrikazTabelarno t = new PrikazTabelarno();
+            t.ShowDialog(this);
+            //this.Close();
         }
 
             }

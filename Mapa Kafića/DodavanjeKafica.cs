@@ -445,7 +445,10 @@ namespace Mapa_Kafića
                                         "`hendikep`	INTEGER," +
                                         "`kat_cena`	TEXT," +
                                         "`ikona`	TEXT," +
-                                        "`datum`	TEXT " +
+                                        "`datum`	TEXT ," +
+                                        "`na_tabeli`	INTEGER, " +
+                                        "`x`	INTEGER, " +
+                                        "`y`	INTEGER " +
                                         ");");
 
 
@@ -465,7 +468,9 @@ namespace Mapa_Kafića
             za_tabelu.Add("kat_cena", cene);
             za_tabelu.Add("ikona", icoPath);
             za_tabelu.Add("datum", datum);
-
+            za_tabelu.Add("na_tabeli", "0");
+            za_tabelu.Add("x","-1");
+            za_tabelu.Add("y", "-1");
             lokali.Insert("lokal", za_tabelu);
 
 
@@ -486,8 +491,13 @@ namespace Mapa_Kafića
 
         private void DodavanjeKafica_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Pocetna p = new Pocetna();
-            p.Show();
+            //Pocetna p = new Pocetna();
+            //p.Show();
+          /*  Pocetna p = (Pocetna)Application.OpenForms[0];
+            p.clearTable();
+            p.readTable();
+            p.refreshList();
+            p.Refresh();*/
         }
 
         private void tipComboBox_Leave(object sender, EventArgs e)
