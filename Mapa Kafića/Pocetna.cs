@@ -105,11 +105,20 @@ namespace Mapa_Kafića
                 {
 
                     //TODO 1: ukoliko postoji ikona
+                    ikone.Images.Add(r["ime"].ToString(), Image.FromFile(r["ikona"].ToString())) ;
                 }
                 //svakako iz ove tabele vucemo boju
                 DataTable etiketaTabela = tip.GetDataTable("SELECT boja FROM etiketa WHERE etiketa = '" + r["etikete"].ToString().Split(',')[0] + "'");
-                DataRow boj = etiketaTabela.Rows[0];
-                String boja = boj["boja"].ToString();
+                String boja;
+                if (etiketaTabela.Rows.Count == 0) {
+                    boja = "White";
+                }
+                else
+                {
+                    DataRow boj = etiketaTabela.Rows[0];
+                    boja = boj["boja"].ToString();
+                }
+                
                 boje[i] = boja;
                 i++;
                 
@@ -169,12 +178,15 @@ namespace Mapa_Kafića
         
         private void Pocetak_Load(object sender, EventArgs e)
         {
-            
+            this.KeyPreview = true;
+            this.KeyDown += new KeyEventHandler(Pocetna_KeyDown);
         }
-
+        
+        // Call the base class
+      
         private void button1_Click(object sender, EventArgs e)
         {
-            DodavanjeKafica f = new DodavanjeKafica();
+            LokalPrikaz f = new LokalPrikaz();
             f.ShowDialog(this);
             //deleteAllPb();
             clearTable();
@@ -333,9 +345,19 @@ namespace Mapa_Kafića
 
         private void button3_Click(object sender, EventArgs e)
         {
-            PrikazTabelarno t = new PrikazTabelarno();
+            TutorialIntro t = new TutorialIntro();
             t.ShowDialog(this);
             //this.Close();
+        }
+
+        private void Pocetna_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode.ToString() == "F1")
+            {
+                // the user pressed the F1 key
+                HelpNavigator navigator = HelpNavigator.TopicId;
+                Help.ShowHelp(this,  "help.chm", navigator, "12");
+            }
         }
 
             }

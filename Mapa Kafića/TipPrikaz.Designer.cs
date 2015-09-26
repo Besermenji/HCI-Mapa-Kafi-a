@@ -239,6 +239,7 @@
             this.Text = "Prikaz Tipova";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.TipPrikaz_FormClosed);
             this.Load += new System.EventHandler(this.TipPrikaz_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TipPrikaz_KeyDown);
             this.InfoPanel.ResumeLayout(false);
             this.InfoPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.icoPictureBox)).EndInit();

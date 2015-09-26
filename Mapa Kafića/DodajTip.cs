@@ -67,6 +67,8 @@ namespace Mapa_Kafića
         {
             tipoviTextBox.Focus();
             tipoviTextBox.Select();
+            this.KeyPreview = true;
+            this.KeyDown += new KeyEventHandler(Tip_KeyDown);
         }
 
         private void dodajTipButton_Click(object sender, EventArgs e)
@@ -247,7 +249,7 @@ namespace Mapa_Kafića
                 Dictionary<string, string> za_update_tip = new Dictionary<string, string>();
 
                 za_update_tip.Add("tip", tipoviTextBox.Text.Trim());
-                za_update_tip.Add("opis", tipoviTextBox.Text.Trim());
+                za_update_tip.Add("opis", opisTipaTextBox.Text.Trim());
                 za_update_tip.Add("ikona", ikonaComboBox.Text.Trim());
                 tip.Update("Tip", za_update_tip, "tip = '" + ime + "'");
 
@@ -350,6 +352,16 @@ namespace Mapa_Kafića
                 if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
                     dodajTipButton.Focus();
                 
+            }
+        }
+
+        private void Tip_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode.ToString() == "F1")
+            {
+                // the user pressed the F1 key
+                HelpNavigator navigator = HelpNavigator.TopicId;
+                Help.ShowHelp(this, "help.chm", navigator, "209");
             }
         }
     }

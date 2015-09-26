@@ -64,7 +64,7 @@
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(122, 23);
             this.button3.TabIndex = 3;
-            this.button3.Text = "Tabelarni prikaz";
+            this.button3.Text = "Tutorijal";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
@@ -133,6 +133,7 @@
             this.Load += new System.EventHandler(this.Pocetak_Load);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Pocetna_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.Pocetna_DragEnter);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Pocetna_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.mapPicture)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

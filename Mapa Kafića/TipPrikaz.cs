@@ -66,6 +66,9 @@ namespace Mapa_Kafića
 
         private void TipPrikaz_Load(object sender, EventArgs e)
         {
+            this.KeyPreview = true;
+            this.KeyDown += new KeyEventHandler(TipPrikaz_KeyDown);
+            
             deleteEntery.Enabled = false;
             string folder = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName) + @"\..\..\tipIcons\";
             string filter = "*.png";
@@ -333,6 +336,16 @@ namespace Mapa_Kafića
             clearTable();
             readTable();
             Refresh();
+        }
+
+        private void TipPrikaz_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode.ToString() == "F1")
+            {
+                // the user pressed the F1 key
+                HelpNavigator navigator = HelpNavigator.TopicId;
+                Help.ShowHelp(this, "help.chm", navigator, "183");
+            }
         }
     }
 }

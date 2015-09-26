@@ -15,23 +15,87 @@ namespace Mapa_Kafića
         
         List<getKaficInfo.Kafic> kaf;
         private String icoPath;
+        private string wop;
                public DodavanjeKafica()
         {
             InitializeComponent();
+            fillAll();
             this.kaf = new List<getKaficInfo.Kafic>();
             this.icoPath = "";
-            Enabled = true; 
-   
+            Enabled = true;
+            button1.Visible = false;
+            button1.Enabled = false;
+            informacijeLokalButton.Enabled = true;
+            informacijeLokalButton.Visible = true;
+    
         }
+
+               public DodavanjeKafica(string wop)
+               {
+                   // TODO: Complete member initialization
+                   this.wop = wop;
+                   InitializeComponent();
+                   fillAll();
+                   ImeLokalaTextBox.Focus();
+                   //this.ime = ime;
+                  // fillCB();
+                   button1.Visible = true;
+                   button1.Enabled = true;
+                   informacijeLokalButton.Enabled = false;
+                   informacijeLokalButton.Visible = false; 
+                   SQLiteDatabase tip = new SQLiteDatabase("", "baza.s3db");
+                   tip.TestConnection();
+                   DataTable t = tip.GetDataTable("Select ime, tip, oznaka, opis, kapacitet, etikete, alkohol, pusenje, rezervacije, hendikep, kat_cena, ikona, datum, x,y from lokal where ime= '" + wop + "';");
+                   ImeLokalaTextBox.Text = t.Rows[0]["ime"].ToString();
+                   tipComboBox.SelectedIndex = tipComboBox.Items.IndexOf(t.Rows[0]["tip"].ToString());
+                   oznakaLokalaTextBox.Text = t.Rows[0]["oznaka"].ToString();
+                   OpisLokalatextBox.Text = t.Rows[0]["opis"].ToString();
+                   textBox1.Text = t.Rows[0]["kapacitet"].ToString();
+
+                   String[] etikes = t.Rows[0]["etikete"].ToString().Trim().Split(',');
+                   foreach (string s in etikes)
+                   {
+                       int index = etiketeListBox.FindStringExact(s.Trim());
+                       if (index == -1) continue;
+                       etiketeListBox.SetSelected(index, true);
+                   }
+
+                   String a = t.Rows[0]["alkohol"].ToString();
+                   if (a == "Služi do 23h." || a == "Služi i kasno noću.") {
+                       alkoholCheckBox.Checked = true;
+                       AlkoholcomboBox.SelectedIndex = AlkoholcomboBox.Items.IndexOf(a);
+
+                   }
+
+                   String p = t.Rows[0]["pusenje"].ToString();
+                   if (p == "Dozvoljeno samo u bašti." || p == "Izdvojena prostorija za pušače." || p=="Podeljen deo za pušače." ||p== "Pušenje dozvoljeno svuda.")
+                   {
+                       pusenjeCheckBox.Checked = true;
+                       pusenjeCheckBox.Visible = true;
+                       pusenjeKomboBox.SelectedIndex = pusenjeKomboBox.Items.IndexOf(p);
+
+                   }
+                   String r = t.Rows[0]["rezervacije"].ToString();
+                   if (r == "1") rezervacijeCheckBox.Checked = true;
+
+                   String h = t.Rows[0]["hendikep"].ToString();
+                   if (h == "1") HendikepCheckBox.Checked = true;
+
+                   string k = t.Rows[0]["kat_cena"].ToString();
+                   ceneComboBox.SelectedIndex = ceneComboBox.Items.IndexOf(k);
+
+                   dateTimePicker1.Value = Convert.ToDateTime((t.Rows[0]["datum"]).ToString());
+                   icoPath = t.Rows[0]["ikona"].ToString();
+
+               }
 
         private void label7_Click(object sender, EventArgs e)
         {
 
         }
-
-        private void Form1_Load(object sender, EventArgs e)
+        public void fillAll()
         {
-            izaberiIkonuButton.Enabled = false;
+            izaberiIkonuButton.Enabled = true;
             //inicijalizacija alkoholnog box-a
             AlkoholcomboBox.Visible = false;
             AlkoholcomboBox.Items.Add("Služi do 23h.");
@@ -61,7 +125,8 @@ namespace Mapa_Kafića
             tip.TestConnection();
             DataTable t = tip.GetDataTable("SELECT tip FROM Tip; ");
 
-            for (int i = 0; i < t.Rows.Count; i++) {
+            for (int i = 0; i < t.Rows.Count; i++)
+            {
                 tipComboBox.Items.Add(t.Rows[i]["tip"]);
             }
 
@@ -79,6 +144,12 @@ namespace Mapa_Kafića
             dateTimePicker1.CustomFormat = "dd-MM-yyyy";
 
             
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            this.KeyPreview = true;
+            this.KeyDown += new KeyEventHandler(DodavanjeKafica_KeyDown);
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -106,12 +177,16 @@ namespace Mapa_Kafića
         {
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
                oznakaLokalaTextBox.Focus();
+                
         }
 
         private void oznakaLokalaTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
+            {
                 tipComboBox.Focus();
+                tipComboBox.DroppedDown = true;
+            }
         }
 
         private void OpisLokalatextBox_KeyDown(object sender, KeyEventArgs e)
@@ -208,11 +283,7 @@ namespace Mapa_Kafića
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
             {
                 pusenjeCheckBox.Focus();
-                alkoholCheckBox.FlatStyle = FlatStyle.Popup;
-                //alkoholCheckBox.ForeColor = Color.Black;
-                //alkoholCheckBox.BackColor = Color.Black;
-                pusenjeCheckBox.FlatStyle = FlatStyle.Flat;
-                this.Refresh();
+                alkoholCheckBox.BackColor = Color.FromName("White");
             }
         }
 
@@ -276,30 +347,12 @@ namespace Mapa_Kafića
 
         private void ImeLokalaTextBox_Leave(object sender, EventArgs e)
         {
-            if(string.IsNullOrEmpty(ImeLokalaTextBox.Text)){
-                ImeLokalaerrorProvider.Icon = Properties.Resources.err;
-                ImeLokalaerrorProvider.SetError(ImeLokalaTextBox, "Unesite ime lokala");
-                ImeLokalaTextBox.Focus();
-            }
-            else{
-                ImeLokalaerrorProvider.Icon = Properties.Resources.ok;
-                ImeLokalaerrorProvider.SetError(ImeLokalaTextBox, "Odlično!");
-            }
+            
         }
 
         private void oznakaLokalaTextBox_Leave(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(oznakaLokalaTextBox.Text))
-            {
-                OznakaerrorProvider.Icon = Properties.Resources.err;
-            OznakaerrorProvider.SetError(oznakaLokalaTextBox, "Unesite oznaku lokala");
-                oznakaLokalaTextBox.Focus();
-            }
-            else
-            {
-                    OznakaerrorProvider.Icon = Properties.Resources.ok;
-                OznakaerrorProvider.SetError(oznakaLokalaTextBox, "Odlično!");
-            }
+            
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -313,174 +366,227 @@ namespace Mapa_Kafića
        (e.KeyChar != '.'))
             {
                 e.Handled = true;
-               
+
             }
+
+            else { e.Handled = false; }
+
         }
 
         private void textBox1_KeyDown(object sender, KeyEventArgs e)
         {
-
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
             {
-                alkoholCheckBox.Focus();
-                //alkoholCheckBox.ForeColor = Color.Black;
-                //alkoholCheckBox.BackColor = Color.Black;
-                alkoholCheckBox.FlatStyle = FlatStyle.Flat;
-                this.Refresh();
+                etiketeListBox.Focus();
+                etiketeListBox.Select();
             }
+            
         }
 
         
 
         private void OpisLokalatextBox_Leave(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(OpisLokalatextBox.Text))
-            {
-                OpisLokalaError.Icon = Properties.Resources.err;
-                OpisLokalaError.SetError(OpisLokalatextBox, "Unesite opis lokala");
-                OpisLokalatextBox.Focus();
-            }
-            else
-            {
-                OpisLokalaError.Icon = Properties.Resources.ok;
-                OpisLokalaError.SetError(OpisLokalatextBox, "Odlično!");
-            }
+            
         }
 
         private void textBox1_Leave(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(textBox1.Text))
-            {
-                kapacitetError.Icon = Properties.Resources.err;
-                kapacitetError.SetError(textBox1, "Unesite kapacitet lokala");
-                textBox1.Focus();
-            }
-            else
-            {
-                kapacitetError.Icon = Properties.Resources.ok;
-                kapacitetError.SetError(textBox1, "Odlično!");
-            }
         }
 
         private void informacijeLokalButton_Click(object sender, EventArgs e)
         {
-            //getKaficInfo.Kafic kafanica = new getKaficInfo.Kafic();
-            String imeKafica = ImeLokalaTextBox.Text;
-            String tipKafica = tipComboBox.Text;
-            String oznakaLokala = oznakaLokalaTextBox.Text;
-            String opisLokala = OpisLokalatextBox.Text;
-            int kapacitet = int.Parse(textBox1.Text);
-            
-            String statusAlkohola;
-            if (alkoholCheckBox.Checked == true)
+
+            if (string.IsNullOrEmpty(ImeLokalaTextBox.Text))
             {
-                statusAlkohola = AlkoholcomboBox.Text;
+                tipToolTip.SetToolTip(ImeLokalaTextBox, "Nije unesen naziv lokala.");
+                tipToolTip.Show(tipToolTip.GetToolTip(ImeLokalaTextBox), ImeLokalaTextBox, 3000);
+                ImeLokalaTextBox.Focus();
+                return;
+
             }
+
+            else if (string.IsNullOrEmpty(oznakaLokalaTextBox.Text))
+            {
+                tipToolTip.SetToolTip(oznakaLokalaTextBox, "Nije unesena oznaka lokala.");
+                tipToolTip.Show(tipToolTip.GetToolTip(oznakaLokalaTextBox), oznakaLokalaTextBox, 3000);
+                oznakaLokalaTextBox.Focus();
+                return;
+            }
+
+            else if (string.IsNullOrEmpty(OpisLokalatextBox.Text))
+            {
+                tipToolTip.SetToolTip(OpisLokalatextBox, "Nije unesen opis lokala.");
+                tipToolTip.Show(tipToolTip.GetToolTip(OpisLokalatextBox), OpisLokalatextBox, 3000);
+                OpisLokalatextBox.Focus();
+                return;
+            }
+
+            else if (string.IsNullOrEmpty(textBox1.Text))
+            {
+                tipToolTip.SetToolTip(textBox1, "Nije unesen kapacitet lokala.");
+                tipToolTip.Show(tipToolTip.GetToolTip(textBox1), textBox1, 3000);
+                textBox1.Focus();
+                return;
+            }
+            else if (tipComboBox.SelectedIndex == -1)
+            {
+                tipToolTip.SetToolTip(tipComboBox, "Nije izabran tip lokala.");
+                tipToolTip.Show(tipToolTip.GetToolTip(tipComboBox), tipComboBox, 3000);
+                tipComboBox.Focus();
+                tipComboBox.DroppedDown = true;
+                return;
+            }
+
+            else if (AlkoholcomboBox.SelectedIndex == -1 && alkoholCheckBox.Checked)
+            {
+                tipToolTip.SetToolTip(AlkoholcomboBox, "Nije izabrana kategorija alkohola.");
+                tipToolTip.Show(tipToolTip.GetToolTip(AlkoholcomboBox), AlkoholcomboBox, 3000);
+                AlkoholcomboBox.Focus();
+                AlkoholcomboBox.DroppedDown = true;
+                return;
+            }
+
+            else if (pusenjeKomboBox.SelectedIndex == -1 && pusenjeCheckBox.Checked)
+            {
+                tipToolTip.SetToolTip(pusenjeKomboBox, "Nije izabrana kategorija pusenja.");
+                tipToolTip.Show(tipToolTip.GetToolTip(pusenjeKomboBox), pusenjeKomboBox, 3000);
+                pusenjeKomboBox.Focus();
+                pusenjeKomboBox.DroppedDown = true;
+                return;
+            }
+
+            else if (ceneComboBox.SelectedIndex == -1)
+            {
+                tipToolTip.SetToolTip(ceneComboBox, "Nije izabran tip lokala.");
+                tipToolTip.Show(tipToolTip.GetToolTip(ceneComboBox), ceneComboBox, 3000);
+                ceneComboBox.Focus();
+                ceneComboBox.DroppedDown = true;
+                return;
+            }
+
             else
             {
-                statusAlkohola = "Ne toči alkohol.";
-            }
+                //getKaficInfo.Kafic kafanica = new getKaficInfo.Kafic();
+                String imeKafica = ImeLokalaTextBox.Text;
+                String tipKafica = tipComboBox.Text;
+                String oznakaLokala = oznakaLokalaTextBox.Text;
+                String opisLokala = OpisLokalatextBox.Text;
+                int kapacitet = int.Parse(textBox1.Text);
 
-            String statusPusenja;
-            if (pusenjeCheckBox.Checked == true)
-            {
-               statusPusenja = pusenjeKomboBox.Text;
-            }
-            else
-            {
-                statusPusenja = "Nije dozvoljeno pušenje.";
-            }
-
-            int rezervacije;
-            if (rezervacijeCheckBox.Checked == true)
-            {
-                rezervacije = 1;
-            }
-            else
-            {
-                rezervacije = 0;
-            }
-
-            
-            int hendikep;
-            if (HendikepCheckBox.Checked == true)
-            {
-               hendikep = 1;
-            }
-            else
-            {
-               hendikep = 0;
-            }
-
-            String cene  = ceneComboBox.Text;
-
-            int[] wop = new int[etiketeListBox.SelectedItems.Count];
-            String etikete = "";
-            if(etiketeListBox.SelectedItems.Count > 0){
-                for (int i = 0; i < etiketeListBox.SelectedItems.Count; i++) {
-                    wop[i] = etiketeListBox.SelectedIndices[i];
+                String statusAlkohola;
+                if (alkoholCheckBox.Checked == true)
+                {
+                    statusAlkohola = AlkoholcomboBox.Text;
                 }
+                else
+                {
+                    statusAlkohola = "Ne toči alkohol.";
+                }
+
+                String statusPusenja;
+                if (pusenjeCheckBox.Checked == true)
+                {
+                    statusPusenja = pusenjeKomboBox.Text;
+                }
+                else
+                {
+                    statusPusenja = "Nije dozvoljeno pušenje.";
+                }
+
+                int rezervacije;
+                if (rezervacijeCheckBox.Checked == true)
+                {
+                    rezervacije = 1;
+                }
+                else
+                {
+                    rezervacije = 0;
+                }
+
+
+                int hendikep;
+                if (HendikepCheckBox.Checked == true)
+                {
+                    hendikep = 1;
+                }
+                else
+                {
+                    hendikep = 0;
+                }
+
+                String cene = ceneComboBox.Text;
+
+                int[] wop = new int[etiketeListBox.SelectedItems.Count];
+                String etikete = "";
+                if (etiketeListBox.SelectedItems.Count > 0)
+                {
+                    for (int i = 0; i < etiketeListBox.SelectedItems.Count; i++)
+                    {
+                        wop[i] = etiketeListBox.SelectedIndices[i];
+                    }
+                }
+
+                for (int i = 0; i < wop.Length; i++)
+                {
+                    etikete += etiketeListBox.Items[wop[i]] + ", ";
+                }
+
+
+                String datum = dateTimePicker1.Value.ToString();
+
+                SQLiteDatabase lokali = new SQLiteDatabase("", "baza.s3db");
+
+                lokali.ExecuteNonQuery("CREATE TABLE IF NOT EXISTS `Lokal`" +
+                                            "(`id`	INTEGER DEFAULT 0 PRIMARY KEY AUTOINCREMENT," +
+                                            "`ime`	TEXT UNIQUE," +
+                                            "`tip`	TEXT," +
+                                            "`oznaka`	TEXT UNIQUE," +
+                                            "`opis`	TEXT," +
+                                            "`kapacitet`	TEXT," +
+                                            "`etikete`	TEXT," +
+                                            "`alkohol`	TEXT," +
+                                            "`pusenje`	TEXT," +
+                                            "`rezervacije`	TEXT," +
+                                            "`hendikep`	TEXT," +
+                                            "`kat_cena`	TEXT," +
+                                            "`ikona`	TEXT," +
+                                            "`datum`	TEXT ," +
+                                            "`na_tabeli`	TEXT, " +
+                                            "`x`	TEXT, " +
+                                            "`y`	TEXT " +
+                                            ");");
+
+
+
+
+                Dictionary<String, String> za_tabelu = new Dictionary<string, string>();
+                za_tabelu.Add("ime", imeKafica);
+                za_tabelu.Add("tip", tipKafica);
+                za_tabelu.Add("oznaka", oznakaLokala);
+                za_tabelu.Add("opis", opisLokala);
+                za_tabelu.Add("kapacitet", kapacitet.ToString());
+                za_tabelu.Add("etikete", etikete);
+                za_tabelu.Add("alkohol", statusAlkohola);
+                za_tabelu.Add("pusenje", statusPusenja);
+                za_tabelu.Add("rezervacije", rezervacije.ToString());
+                za_tabelu.Add("hendikep", hendikep.ToString());
+                za_tabelu.Add("kat_cena", cene);
+                za_tabelu.Add("ikona", icoPath);
+                za_tabelu.Add("datum", datum);
+                za_tabelu.Add("na_tabeli", "0");
+                za_tabelu.Add("x", "-1");
+                za_tabelu.Add("y", "-1");
+                lokali.Insert("lokal", za_tabelu);
+
+
+
+                this.Close();
+
+
+
+
             }
-
-            for (int i = 0; i < wop.Length; i++) {
-                etikete += etiketeListBox.Items[wop[i]]+", ";
-            }
-
-            
-            String datum = dateTimePicker1.Value.ToString();
-
-            SQLiteDatabase lokali = new SQLiteDatabase("", "baza.s3db");
-            
-            lokali.ExecuteNonQuery("CREATE TABLE IF NOT EXISTS `Lokal`" +
-                                        "(`id`	INTEGER DEFAULT 0 PRIMARY KEY AUTOINCREMENT," +
-                                        "`ime`	TEXT UNIQUE," +
-                                        "`tip`	TEXT," +
-                                        "`oznaka`	TEXT UNIQUE," +
-                                        "`opis`	TEXT," +
-                                        "`kapacitet`	INTEGER," +
-                                        "`etikete`	TEXT," +
-                                        "`alkohol`	TEXT," +
-                                        "`pusenje`	TEXT," +
-                                        "`rezervacije`	INTEGER," +
-                                        "`hendikep`	INTEGER," +
-                                        "`kat_cena`	TEXT," +
-                                        "`ikona`	TEXT," +
-                                        "`datum`	TEXT ," +
-                                        "`na_tabeli`	INTEGER, " +
-                                        "`x`	INTEGER, " +
-                                        "`y`	INTEGER " +
-                                        ");");
-
-
-            
-
-            Dictionary<String, String> za_tabelu = new Dictionary<string, string>();
-            za_tabelu.Add("ime", imeKafica);
-            za_tabelu.Add("tip", tipKafica);
-            za_tabelu.Add("oznaka", oznakaLokala);
-            za_tabelu.Add("opis", opisLokala);
-            za_tabelu.Add("kapacitet", kapacitet.ToString());
-            za_tabelu.Add("etikete", etikete);
-            za_tabelu.Add("alkohol", statusAlkohola);
-            za_tabelu.Add("pusenje", statusPusenja);
-            za_tabelu.Add("rezervacije", rezervacije.ToString());
-            za_tabelu.Add("hendikep", hendikep.ToString());
-            za_tabelu.Add("kat_cena", cene);
-            za_tabelu.Add("ikona", icoPath);
-            za_tabelu.Add("datum", datum);
-            za_tabelu.Add("na_tabeli", "0");
-            za_tabelu.Add("x","-1");
-            za_tabelu.Add("y", "-1");
-            lokali.Insert("lokal", za_tabelu);
-
-
-            
-            this.Close();
-            
-            
-
-
-
         }
 
 
@@ -502,17 +608,7 @@ namespace Mapa_Kafića
 
         private void tipComboBox_Leave(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(tipComboBox.Text))
-            {
-                tipLokalaError.Icon = Properties.Resources.err;
-                tipLokalaError.SetError(tipComboBox, "Izaberite tip lokala");
-                tipComboBox.Focus();
-            }
-            else
-            {
-                tipLokalaError.Icon = Properties.Resources.ok;
-                tipLokalaError.SetError(tipComboBox, "Odlično!");
-            }
+            
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -522,60 +618,378 @@ namespace Mapa_Kafića
 
         private void etiketeListBox_Leave(object sender, EventArgs e)
         {
-            if (etiketeListBox.SelectedIndex == -1)
-            {
-                etiketeErrorProvider.Icon = Properties.Resources.err;
-                etiketeErrorProvider.SetError(etiketeListBox, "Izaberite makar jednu stvar sa liste");
-                etiketeListBox.Focus();
-            }
-            else
-            {
-                etiketeErrorProvider.Icon = Properties.Resources.ok;
-                etiketeErrorProvider.SetError(etiketeListBox, "Odlično!");
-            }
+            
         }
 
         private void dateTimePicker1_Leave(object sender, EventArgs e)
         {
-            if (dateTimePicker1.Value < DateTime.Now.Date)
-            {
-                datumErrorProvider.Icon = Properties.Resources.err;
-                datumErrorProvider.SetError(dateTimePicker1, "Nemoguće otvoriti kafic u prošlosti.");
-                dateTimePicker1.Focus();
-            }
-            else
-            {
-                datumErrorProvider.Icon = Properties.Resources.ok;
-                datumErrorProvider.SetError(dateTimePicker1, "Odlično!");
-            }
+            
         }
 
         private void ceneComboBox_Leave(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(ceneComboBox.Text))
-            {
-                kategorijaCenaError.Icon = Properties.Resources.err;
-                kategorijaCenaError.SetError(ceneComboBox, "Izaberite kategoriju cena.");
-                ceneComboBox.Focus();
-            }
-            else
-            {
-                kategorijaCenaError.Icon = Properties.Resources.ok;
-                kategorijaCenaError.SetError(ceneComboBox, "Odlično!");
-                izaberiIkonuButton.Enabled = true;
-                izaberiIkonuButton.Focus();
-            }
+            
         }
 
         private void izaberiIkonuButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog op = new OpenFileDialog();
             //op.FileName = "*.ico"
-            op.Filter = " Icon Files|*.ico";
-            op.ShowDialog();
+            op.Filter = " PNG Files|*.png";
+            op.ShowDialog(this);
 
             icoPath = op.FileName;
             
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ImeLokalaTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            //ToolTip t = new ToolTip();
+            if (e.KeyChar == ';')
+            {
+                //  t.Show("Unet nedozvoljen karakter ; !", this, 3000);
+
+                e.Handled = true;
+
+            }
+            else if (e.KeyChar == '"')
+            {
+                //t.Show("Unet nedozvoljen karakter \" !", this, 3000);
+                e.Handled = true;
+            }
+
+            else if (e.KeyChar == '\'')
+            {
+                // t.Show("Unet nedozvoljen karakter \' !", this, 3000);
+                e.Handled = true;
+            }
+
+            else if (e.KeyChar == '\r')
+            {
+                e.Handled = true;
+            }
+
+            else
+            {
+                e.Handled = false;
+            }
+        }
+
+        private void oznakaLokalaTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            //ToolTip t = new ToolTip();
+            if (e.KeyChar == ';')
+            {
+                //  t.Show("Unet nedozvoljen karakter ; !", this, 3000);
+
+                e.Handled = true;
+
+            }
+            else if (e.KeyChar == '"')
+            {
+                //t.Show("Unet nedozvoljen karakter \" !", this, 3000);
+                e.Handled = true;
+            }
+
+            else if (e.KeyChar == '\'')
+            {
+                // t.Show("Unet nedozvoljen karakter \' !", this, 3000);
+                e.Handled = true;
+            }
+
+            else if (e.KeyChar == '\r')
+            {
+                e.Handled = true;
+            }
+
+            else
+            {
+                e.Handled = false;
+            }
+        }
+
+        private void OpisLokalatextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            //ToolTip t = new ToolTip();
+            if (e.KeyChar == ';')
+            {
+                //  t.Show("Unet nedozvoljen karakter ; !", this, 3000);
+
+                e.Handled = true;
+
+            }
+            else if (e.KeyChar == '"')
+            {
+                //t.Show("Unet nedozvoljen karakter \" !", this, 3000);
+                e.Handled = true;
+            }
+
+            else if (e.KeyChar == '\'')
+            {
+                // t.Show("Unet nedozvoljen karakter \' !", this, 3000);
+                e.Handled = true;
+            }
+
+            else if (e.KeyChar == '\r')
+            {
+                e.Handled = true;
+            }
+
+            else
+            {
+                e.Handled = false;
+            }
+        }
+
+        private void tipComboBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
+                OpisLokalatextBox.Focus();
+        }
+
+        private void etiketeListBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
+            {
+                alkoholCheckBox.Focus();
+                //alkoholCheckBox.ForeColor = Color.Black;
+                //alkoholCheckBox.BackColor = Color.Black;
+               // alkoholCheckBox.BackColor = Color.FromName("Green");
+            }
+        }
+
+        private void alkoholCheckBox_Enter(object sender, EventArgs e)
+        {
+            alkoholCheckBox.BackColor = Color.FromName("Green");
+        }
+
+        private void alkoholCheckBox_Leave(object sender, EventArgs e)
+        {
+            alkoholCheckBox.BackColor = Color.FromName("White");
+
+        }
+
+        private void pusenjeCheckBox_Enter(object sender, EventArgs e)
+        {
+            pusenjeCheckBox.BackColor = Color.FromName("Green");
+
+        }
+
+        private void pusenjeCheckBox_Leave(object sender, EventArgs e)
+        {
+            pusenjeCheckBox.BackColor = Color.FromName("White");
+
+        }
+
+        private void rezervacijeCheckBox_Enter(object sender, EventArgs e)
+        {
+            rezervacijeCheckBox.BackColor = Color.FromName("Green");
+
+        }
+
+        private void rezervacijeCheckBox_Leave(object sender, EventArgs e)
+        {
+            rezervacijeCheckBox.BackColor = Color.FromName("White");
+
+        }
+
+        private void HendikepCheckBox_Enter(object sender, EventArgs e)
+        {
+            HendikepCheckBox.BackColor = Color.FromName("Green");
+
+        }
+
+        private void HendikepCheckBox_Leave(object sender, EventArgs e)
+        {
+            HendikepCheckBox.BackColor = Color.FromName("White");
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            
+            if (string.IsNullOrEmpty(ImeLokalaTextBox.Text))
+            {
+                tipToolTip.SetToolTip(ImeLokalaTextBox, "Nije unesen naziv lokala.");
+                tipToolTip.Show(tipToolTip.GetToolTip(ImeLokalaTextBox), ImeLokalaTextBox, 3000);
+                ImeLokalaTextBox.Focus();
+                return;
+
+            }
+
+            else if (string.IsNullOrEmpty(oznakaLokalaTextBox.Text))
+            {
+                tipToolTip.SetToolTip(oznakaLokalaTextBox, "Nije unesena oznaka lokala.");
+                tipToolTip.Show(tipToolTip.GetToolTip(oznakaLokalaTextBox), oznakaLokalaTextBox, 3000);
+                oznakaLokalaTextBox.Focus();
+                return;
+            }
+
+            else if (string.IsNullOrEmpty(OpisLokalatextBox.Text))
+            {
+                tipToolTip.SetToolTip(OpisLokalatextBox, "Nije unesen opis lokala.");
+                tipToolTip.Show(tipToolTip.GetToolTip(OpisLokalatextBox), OpisLokalatextBox, 3000);
+                OpisLokalatextBox.Focus();
+                return;
+            }
+
+            else if (string.IsNullOrEmpty(textBox1.Text))
+            {
+                tipToolTip.SetToolTip(textBox1, "Nije unesen kapacitet lokala.");
+                tipToolTip.Show(tipToolTip.GetToolTip(textBox1), textBox1, 3000);
+                textBox1.Focus();
+                return;
+            }
+            else if (tipComboBox.SelectedIndex == -1)
+            {
+                tipToolTip.SetToolTip(tipComboBox, "Nije izabran tip lokala.");
+                tipToolTip.Show(tipToolTip.GetToolTip(tipComboBox), tipComboBox, 3000);
+                tipComboBox.Focus();
+                tipComboBox.DroppedDown = true;
+                return;
+            }
+
+            else if (AlkoholcomboBox.SelectedIndex == -1 && alkoholCheckBox.Checked)
+            {
+                tipToolTip.SetToolTip(AlkoholcomboBox, "Nije izabrana kategorija alkohola.");
+                tipToolTip.Show(tipToolTip.GetToolTip(AlkoholcomboBox), AlkoholcomboBox, 3000);
+                AlkoholcomboBox.Focus();
+                AlkoholcomboBox.DroppedDown = true;
+                return;
+            }
+
+            else if (pusenjeKomboBox.SelectedIndex == -1 && pusenjeCheckBox.Checked)
+            {
+                tipToolTip.SetToolTip(pusenjeKomboBox, "Nije izabrana kategorija pusenja.");
+                tipToolTip.Show(tipToolTip.GetToolTip(pusenjeKomboBox), pusenjeKomboBox, 3000);
+                pusenjeKomboBox.Focus();
+                pusenjeKomboBox.DroppedDown = true;
+                return;
+            }
+
+            else if (ceneComboBox.SelectedIndex == -1)
+            {
+                tipToolTip.SetToolTip(ceneComboBox, "Nije izabran tip lokala.");
+                tipToolTip.Show(tipToolTip.GetToolTip(ceneComboBox), ceneComboBox, 3000);
+                ceneComboBox.Focus();
+                ceneComboBox.DroppedDown = true;
+                return;
+            }
+
+            else
+            {
+                //getKaficInfo.Kafic kafanica = new getKaficInfo.Kafic();
+                String imeKafica = ImeLokalaTextBox.Text;
+                String tipKafica = tipComboBox.Text;
+                String oznakaLokala = oznakaLokalaTextBox.Text;
+                String opisLokala = OpisLokalatextBox.Text;
+                int kapacitet = int.Parse(textBox1.Text);
+
+                String statusAlkohola;
+                if (alkoholCheckBox.Checked == true)
+                {
+                    statusAlkohola = AlkoholcomboBox.Text;
+                }
+                else
+                {
+                    statusAlkohola = "Ne toči alkohol.";
+                }
+
+                String statusPusenja;
+                if (pusenjeCheckBox.Checked == true)
+                {
+                    statusPusenja = pusenjeKomboBox.Text;
+                }
+                else
+                {
+                    statusPusenja = "Nije dozvoljeno pušenje.";
+                }
+
+                int rezervacije;
+                if (rezervacijeCheckBox.Checked == true)
+                {
+                    rezervacije = 1;
+                }
+                else
+                {
+                    rezervacije = 0;
+                }
+
+
+                int hendikep;
+                if (HendikepCheckBox.Checked == true)
+                {
+                    hendikep = 1;
+                }
+                else
+                {
+                    hendikep = 0;
+                }
+
+                String cene = ceneComboBox.Text;
+
+                int[] wop = new int[etiketeListBox.SelectedItems.Count];
+                String etikete = "";
+                if (etiketeListBox.SelectedItems.Count > 0)
+                {
+                    for (int i = 0; i < etiketeListBox.SelectedItems.Count; i++)
+                    {
+                        wop[i] = etiketeListBox.SelectedIndices[i];
+                    }
+                }
+
+                for (int i = 0; i < wop.Length; i++)
+                {
+                    etikete += etiketeListBox.Items[wop[i]] + ", ";
+                }
+
+
+                String datum = dateTimePicker1.Value.ToString();
+
+                SQLiteDatabase lokali = new SQLiteDatabase("", "baza.s3db");
+                Dictionary<String, String> za_tabelu = new Dictionary<string, string>();
+                za_tabelu.Add("ime", imeKafica);
+                za_tabelu.Add("tip", tipKafica);
+                za_tabelu.Add("oznaka", oznakaLokala);
+                za_tabelu.Add("opis", opisLokala);
+                za_tabelu.Add("kapacitet", kapacitet.ToString());
+                za_tabelu.Add("etikete", etikete);
+                za_tabelu.Add("alkohol", statusAlkohola);
+                za_tabelu.Add("pusenje", statusPusenja);
+                za_tabelu.Add("rezervacije", rezervacije.ToString());
+                za_tabelu.Add("hendikep", hendikep.ToString());
+                za_tabelu.Add("kat_cena", cene);
+                za_tabelu.Add("ikona", icoPath);
+                za_tabelu.Add("datum", datum);
+                za_tabelu.Add("na_tabeli", "0");
+                //za_tabelu.Add("x", "-1");
+                //za_tabelu.Add("y", "-1");
+                //lokali.Insert("lokal", za_tabelu);
+
+                //lokali.Update("Lokal", za_tabelu, "ime = '" + wop + "'");
+                lokali.Update("Lokal", za_tabelu, "ime = '" + this.wop + "'");
+
+
+                this.Close();
+                
+            
+            }
+
+        }
+
+        private void DodavanjeKafica_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode.ToString() == "F1")
+            {
+                // the user pressed the F1 key
+                HelpNavigator navigator = HelpNavigator.TopicId;
+                Help.ShowHelp(this, "help.chm", navigator, "140");
+            }
         }
     }
 }

@@ -180,7 +180,8 @@ namespace Mapa_Kafića
 
         private void DodajEtiketu_Load(object sender, EventArgs e)
         {
-
+            this.KeyPreview = true;
+            this.KeyDown += new KeyEventHandler(DodajEtiketu_KeyDown);
             tipoviTextBox.Focus();
             tipoviTextBox.Select();
             foreach (System.Reflection.PropertyInfo prop in typeof(Color).GetProperties())
@@ -375,6 +376,16 @@ namespace Mapa_Kafića
 
 
 
+            }
+        }
+
+        private void DodajEtiketu_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode.ToString() == "F1")
+            {
+                // the user pressed the F1 key
+                HelpNavigator navigator = HelpNavigator.TopicId;
+                Help.ShowHelp(this, "help.chm", navigator, "263");
             }
         }
 

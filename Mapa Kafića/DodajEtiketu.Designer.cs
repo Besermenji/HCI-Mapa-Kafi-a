@@ -177,6 +177,7 @@
             this.Text = "Dodaj Etiketu";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.DodajEtiketu_FormClosed);
             this.Load += new System.EventHandler(this.DodajEtiketu_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DodajEtiketu_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.etiketaErrorProvider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.opisErrorProvider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.colorErrorProvider)).EndInit();

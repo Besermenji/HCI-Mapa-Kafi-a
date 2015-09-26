@@ -167,6 +167,7 @@
             this.Text = "Dodaj tip";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Tip_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Tip_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

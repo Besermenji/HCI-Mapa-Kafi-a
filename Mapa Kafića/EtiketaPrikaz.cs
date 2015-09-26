@@ -141,6 +141,8 @@ namespace Mapa_Kafića
         {
             deleteEntery.Enabled = false;
             IzmeniButton.Enabled = false;
+            this.KeyPreview = true;
+            this.KeyDown += new KeyEventHandler(EtiketaPrikaz_KeyDown);
         }
 
         private void etiketeListView_SelectedIndexChanged(object sender, EventArgs e)
@@ -164,7 +166,7 @@ namespace Mapa_Kafića
                 SQLiteDatabase tip = new SQLiteDatabase("", "baza.s3db");
                 tip.TestConnection();
                 DataTable t = tip.GetDataTable("Select etiketa,opis,boja from etiketa where etiketa= '"+wop+"';");
-
+                
                 ImeLabel.Text = t.Rows[0]["etiketa"].ToString();
                 opisLabel.Text = t.Rows[0]["opis"].ToString();
                 bojaLabel.Text = t.Rows[0]["boja"].ToString();
@@ -304,6 +306,16 @@ namespace Mapa_Kafića
             clearTable();
             readTable();
             Refresh();
+        }
+
+        private void EtiketaPrikaz_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode.ToString() == "F1")
+            {
+                // the user pressed the F1 key
+                HelpNavigator navigator = HelpNavigator.TopicId;
+                Help.ShowHelp(this, "help.chm", navigator, "236");
+            }
         }
         }
 }

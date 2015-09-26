@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DodavanjeKafica));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -50,34 +49,16 @@
             this.OpisLokalatextBox = new System.Windows.Forms.TextBox();
             this.pusenjeKomboBox = new System.Windows.Forms.ComboBox();
             this.ceneComboBox = new System.Windows.Forms.ComboBox();
-            this.ImeLokalaerrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.OznakaerrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.label3 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.tipLokalaError = new System.Windows.Forms.ErrorProvider(this.components);
-            this.OpisLokalaError = new System.Windows.Forms.ErrorProvider(this.components);
-            this.AlkoholError = new System.Windows.Forms.ErrorProvider(this.components);
-            this.pusenjeError = new System.Windows.Forms.ErrorProvider(this.components);
-            this.kapacitetError = new System.Windows.Forms.ErrorProvider(this.components);
-            this.kategorijaCenaError = new System.Windows.Forms.ErrorProvider(this.components);
             this.tipComboBox = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.etiketeListBox = new System.Windows.Forms.ListBox();
-            this.etiketeErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.label12 = new System.Windows.Forms.Label();
             this.izaberiIkonuButton = new System.Windows.Forms.Button();
-            this.datumErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.ImeLokalaerrorProvider)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.OznakaerrorProvider)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tipLokalaError)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.OpisLokalaError)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.AlkoholError)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pusenjeError)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.kapacitetError)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.kategorijaCenaError)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.etiketeErrorProvider)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.datumErrorProvider)).BeginInit();
+            this.tipToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -138,6 +119,7 @@
             this.ImeLokalaTextBox.TabIndex = 10;
             this.ImeLokalaTextBox.TextChanged += new System.EventHandler(this.ImeLokalaTextBox_TextChanged);
             this.ImeLokalaTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ImeLokalaTextBox_KeyDown);
+            this.ImeLokalaTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ImeLokalaTextBox_KeyPress);
             this.ImeLokalaTextBox.Leave += new System.EventHandler(this.ImeLokalaTextBox_Leave);
             // 
             // oznakaLokalaTextBox
@@ -147,6 +129,7 @@
             this.oznakaLokalaTextBox.Size = new System.Drawing.Size(210, 20);
             this.oznakaLokalaTextBox.TabIndex = 20;
             this.oznakaLokalaTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.oznakaLokalaTextBox_KeyDown);
+            this.oznakaLokalaTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.oznakaLokalaTextBox_KeyPress);
             this.oznakaLokalaTextBox.Leave += new System.EventHandler(this.oznakaLokalaTextBox_Leave);
             // 
             // label10
@@ -169,7 +152,9 @@
             this.rezervacijeCheckBox.TabIndex = 110;
             this.rezervacijeCheckBox.UseVisualStyleBackColor = true;
             this.rezervacijeCheckBox.CheckedChanged += new System.EventHandler(this.rezervacijeCheckBox_CheckedChanged);
+            this.rezervacijeCheckBox.Enter += new System.EventHandler(this.rezervacijeCheckBox_Enter);
             this.rezervacijeCheckBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rezervacijeCheckBox_KeyDown);
+            this.rezervacijeCheckBox.Leave += new System.EventHandler(this.rezervacijeCheckBox_Leave);
             // 
             // HendikepCheckBox
             // 
@@ -180,7 +165,9 @@
             this.HendikepCheckBox.Size = new System.Drawing.Size(13, 12);
             this.HendikepCheckBox.TabIndex = 120;
             this.HendikepCheckBox.UseVisualStyleBackColor = true;
+            this.HendikepCheckBox.Enter += new System.EventHandler(this.HendikepCheckBox_Enter);
             this.HendikepCheckBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.HendikepCheckBox_KeyDown);
+            this.HendikepCheckBox.Leave += new System.EventHandler(this.HendikepCheckBox_Leave);
             // 
             // pusenjeCheckBox
             // 
@@ -192,7 +179,9 @@
             this.pusenjeCheckBox.TabIndex = 80;
             this.pusenjeCheckBox.UseVisualStyleBackColor = true;
             this.pusenjeCheckBox.CheckedChanged += new System.EventHandler(this.pusenjeCheckBox_CheckedChanged);
+            this.pusenjeCheckBox.Enter += new System.EventHandler(this.pusenjeCheckBox_Enter);
             this.pusenjeCheckBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.pusenjeCheckBox_KeyDown);
+            this.pusenjeCheckBox.Leave += new System.EventHandler(this.pusenjeCheckBox_Leave);
             // 
             // alkoholCheckBox
             // 
@@ -204,7 +193,9 @@
             this.alkoholCheckBox.TabIndex = 60;
             this.alkoholCheckBox.UseVisualStyleBackColor = true;
             this.alkoholCheckBox.CheckedChanged += new System.EventHandler(this.alkoholCheckBox_CheckedChanged);
+            this.alkoholCheckBox.Enter += new System.EventHandler(this.alkoholCheckBox_Enter);
             this.alkoholCheckBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.alkoholCheckBox_KeyDown);
+            this.alkoholCheckBox.Leave += new System.EventHandler(this.alkoholCheckBox_Leave);
             // 
             // label11
             // 
@@ -264,6 +255,7 @@
             this.OpisLokalatextBox.TabIndex = 40;
             this.OpisLokalatextBox.TextChanged += new System.EventHandler(this.OpisLokalatextBox_TextChanged);
             this.OpisLokalatextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OpisLokalatextBox_KeyDown);
+            this.OpisLokalatextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OpisLokalatextBox_KeyPress);
             this.OpisLokalatextBox.Leave += new System.EventHandler(this.OpisLokalatextBox_Leave);
             // 
             // pusenjeKomboBox
@@ -285,18 +277,6 @@
             this.ceneComboBox.TabIndex = 130;
             this.ceneComboBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ceneComboBox_KeyDown);
             this.ceneComboBox.Leave += new System.EventHandler(this.ceneComboBox_Leave);
-            // 
-            // ImeLokalaerrorProvider
-            // 
-            this.ImeLokalaerrorProvider.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
-            this.ImeLokalaerrorProvider.ContainerControl = this;
-            this.ImeLokalaerrorProvider.Icon = ((System.Drawing.Icon)(resources.GetObject("ImeLokalaerrorProvider.Icon")));
-            // 
-            // OznakaerrorProvider
-            // 
-            this.OznakaerrorProvider.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
-            this.OznakaerrorProvider.ContainerControl = this;
-            this.OznakaerrorProvider.Icon = ((System.Drawing.Icon)(resources.GetObject("OznakaerrorProvider.Icon")));
             // 
             // label3
             // 
@@ -320,30 +300,6 @@
             this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
             this.textBox1.Leave += new System.EventHandler(this.textBox1_Leave);
             // 
-            // tipLokalaError
-            // 
-            this.tipLokalaError.ContainerControl = this;
-            // 
-            // OpisLokalaError
-            // 
-            this.OpisLokalaError.ContainerControl = this;
-            // 
-            // AlkoholError
-            // 
-            this.AlkoholError.ContainerControl = this;
-            // 
-            // pusenjeError
-            // 
-            this.pusenjeError.ContainerControl = this;
-            // 
-            // kapacitetError
-            // 
-            this.kapacitetError.ContainerControl = this;
-            // 
-            // kategorijaCenaError
-            // 
-            this.kategorijaCenaError.ContainerControl = this;
-            // 
             // tipComboBox
             // 
             this.tipComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -352,6 +308,7 @@
             this.tipComboBox.Name = "tipComboBox";
             this.tipComboBox.Size = new System.Drawing.Size(154, 21);
             this.tipComboBox.TabIndex = 30;
+            this.tipComboBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tipComboBox_KeyDown);
             this.tipComboBox.Leave += new System.EventHandler(this.tipComboBox_Leave);
             // 
             // label6
@@ -375,11 +332,8 @@
             this.etiketeListBox.Size = new System.Drawing.Size(259, 95);
             this.etiketeListBox.TabIndex = 55;
             this.etiketeListBox.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
+            this.etiketeListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.etiketeListBox_KeyDown);
             this.etiketeListBox.Leave += new System.EventHandler(this.etiketeListBox_Leave);
-            // 
-            // etiketeErrorProvider
-            // 
-            this.etiketeErrorProvider.ContainerControl = this;
             // 
             // dateTimePicker1
             // 
@@ -389,6 +343,7 @@
             this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
             this.dateTimePicker1.TabIndex = 125;
             this.dateTimePicker1.Value = new System.DateTime(2015, 1, 1, 0, 0, 0, 0);
+            this.dateTimePicker1.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             this.dateTimePicker1.Leave += new System.EventHandler(this.dateTimePicker1_Leave);
             // 
             // label12
@@ -411,15 +366,22 @@
             this.izaberiIkonuButton.UseVisualStyleBackColor = true;
             this.izaberiIkonuButton.Click += new System.EventHandler(this.izaberiIkonuButton_Click);
             // 
-            // datumErrorProvider
+            // button1
             // 
-            this.datumErrorProvider.ContainerControl = this;
+            this.button1.Location = new System.Drawing.Point(603, 329);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(119, 50);
+            this.button1.TabIndex = 144;
+            this.button1.Text = "Izmeni lokal";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // DodavanjeKafica
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(734, 391);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.izaberiIkonuButton);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.dateTimePicker1);
@@ -452,16 +414,7 @@
             this.Text = "Dodaj Lokal";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.DodavanjeKafica_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.ImeLokalaerrorProvider)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.OznakaerrorProvider)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tipLokalaError)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.OpisLokalaError)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.AlkoholError)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pusenjeError)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.kapacitetError)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.kategorijaCenaError)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.etiketeErrorProvider)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.datumErrorProvider)).EndInit();
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DodavanjeKafica_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -489,24 +442,16 @@
         private System.Windows.Forms.TextBox OpisLokalatextBox;
         private System.Windows.Forms.ComboBox pusenjeKomboBox;
         private System.Windows.Forms.ComboBox ceneComboBox;
-        private System.Windows.Forms.ErrorProvider ImeLokalaerrorProvider;
-        private System.Windows.Forms.ErrorProvider OznakaerrorProvider;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.ErrorProvider tipLokalaError;
-        private System.Windows.Forms.ErrorProvider OpisLokalaError;
-        private System.Windows.Forms.ErrorProvider AlkoholError;
-        private System.Windows.Forms.ErrorProvider pusenjeError;
-        private System.Windows.Forms.ErrorProvider kapacitetError;
-        private System.Windows.Forms.ErrorProvider kategorijaCenaError;
         private System.Windows.Forms.ComboBox tipComboBox;
         private System.Windows.Forms.ListBox etiketeListBox;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ErrorProvider etiketeErrorProvider;
         private System.Windows.Forms.Button izaberiIkonuButton;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.ErrorProvider datumErrorProvider;
+        private System.Windows.Forms.ToolTip tipToolTip;
+        private System.Windows.Forms.Button button1;
     }
 }
 

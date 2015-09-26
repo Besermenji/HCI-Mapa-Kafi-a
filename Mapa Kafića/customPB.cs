@@ -80,13 +80,13 @@ namespace Mapa_Kafića
             m = new ContextMenu();
             MenuItem update = new MenuItem("Izmeni lokal");
             MenuItem delete = new MenuItem("Obriši lokal");
-            m.MenuItems.Add(update);
+            //m.MenuItems.Add(update);
             m.MenuItems.Add(delete);
 
 
             // Add functionality to the menu items using the Click event. 
-            update.Click += new System.EventHandler(this.update_Click);
-            delete.Click += new System.EventHandler(this.delete_Click);
+           // update.Click += new System.EventHandler(this.update_Click);
+            //delete.Click += new System.EventHandler(this.delete_Click);
             
         }
 
@@ -138,11 +138,11 @@ namespace Mapa_Kafića
         }
 
 
-        private void update_Click(object sender, System.EventArgs e)
+        /*private void update_Click(object sender, System.EventArgs e)
         {
             // Create a new OpenFileDialog and display it.
             this.BackColor = Color.Black;
-        }
+        }*/
 
         private void delete_Click(object sender, System.EventArgs e)
         {
@@ -183,8 +183,16 @@ namespace Mapa_Kafića
                 }
                 //svakako iz ove tabele vucemo boju
                 DataTable etiketaTabela = tip.GetDataTable("SELECT boja FROM etiketa WHERE etiketa = '" + r["etikete"].ToString().Split(',')[0] + "'");
-                DataRow boj = etiketaTabela.Rows[0];
-                String boja = boj["boja"].ToString();
+                String boja;
+                if (etiketaTabela.Rows.Count == 0) {
+                    boja = "White";
+                }
+                else
+                {
+                    DataRow boj = etiketaTabela.Rows[0];
+                   boja = boj["boja"].ToString();
+                }
+                
                 boje[i] = boja;
                 i++;
 

@@ -89,6 +89,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="checkB_liste.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="checkB_liste.Designer.cs">
+      <DependentUpon>checkB_liste.cs</DependentUpon>
+    </Compile>
     <Compile Include="customPB.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -106,6 +112,18 @@
     </Compile>
     <Compile Include="EtiketaPrikaz.Designer.cs">
       <DependentUpon>EtiketaPrikaz.cs</DependentUpon>
+    </Compile>
+    <Compile Include="infoToolTip.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="infoToolTip.Designer.cs">
+      <DependentUpon>infoToolTip.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LokalPrikaz.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LokalPrikaz.Designer.cs">
+      <DependentUpon>LokalPrikaz.cs</DependentUpon>
     </Compile>
     <Compile Include="SQLiteCRUD.cs" />
     <Compile Include="DodavanjeKafica.cs">
@@ -134,12 +152,27 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tab.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tab.Designer.cs">
+      <DependentUpon>Tab.cs</DependentUpon>
+    </Compile>
     <Compile Include="TipPrikaz.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="TipPrikaz.Designer.cs">
       <DependentUpon>TipPrikaz.cs</DependentUpon>
     </Compile>
+    <Compile Include="TutorialIntro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TutorialIntro.Designer.cs">
+      <DependentUpon>TutorialIntro.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="checkB_liste.resx">
+      <DependentUpon>checkB_liste.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DodajEtiketu.resx">
       <DependentUpon>DodajEtiketu.cs</DependentUpon>
     </EmbeddedResource>
@@ -151,6 +184,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EtiketaPrikaz.resx">
       <DependentUpon>EtiketaPrikaz.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="infoToolTip.resx">
+      <DependentUpon>infoToolTip.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LokalPrikaz.resx">
+      <DependentUpon>LokalPrikaz.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PrikazTabelarno.resx">
       <DependentUpon>PrikazTabelarno.cs</DependentUpon>
@@ -168,8 +207,14 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Tab.resx">
+      <DependentUpon>Tab.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TipPrikaz.resx">
       <DependentUpon>TipPrikaz.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TutorialIntro.resx">
+      <DependentUpon>TutorialIntro.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config" />
     <None Include="Properties\Settings.settings">
@@ -795,7 +840,9 @@
     <Folder Include="Fakes\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Arrow-keys.jpg" />
     <Content Include="Resources\map.jpg" />
+    <None Include="Resources\TabKey.png" />
     <None Include="tipIcons\null.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
